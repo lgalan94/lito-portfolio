@@ -1,13 +1,16 @@
-import './App.css'
+import './App.css';
+import Hero from './components/Hero';
+import Header from './components/Header';
 
 function App() {
 
   return (
-    <>
-      <div className="flex items-center justify-center min-h-screen">
-        <h1 className="text-5xl font-bold text-red-700 underline">This is a Developer Portfolio</h1>
-      </div>
-    </>
+    <div className="bg-slate-900 text-slate-300">
+      <Header />
+      <main className="container mx-auto px-4 md:px-8">
+        <Hero />
+      </main>
+    </div>
   )
 }
 
