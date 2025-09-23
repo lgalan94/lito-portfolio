@@ -1,5 +1,3 @@
-
-import React from 'react';
 import type { Skill, Project, ExperienceItem, SocialLink, NavLink } from './types';
 
 // SVG Icons for Skills
