@@ -50,8 +50,8 @@ const Header: React.FC = () => {
     <header className={`sticky top-0 z-50 transition-all duration-300 ${isScrolled || isMenuOpen ? 'bg-slate-900/80 backdrop-blur-sm shadow-lg' : 'bg-transparent'}`}>
       <nav className="container mx-auto px-4 md:px-8">
         <div className="flex justify-between items-center py-4">
-          <a href="#" className="text-2xl font-bold text-white hover:text-cyan-400 transition-colors">
-            Lito Galan Jr
+          <a href="#" className="text-2xl font-bold text-blue-400 hover:text-cyan-400 transition-colors">
+            LITO
           </a>
           
           {/* Desktop Menu */}
