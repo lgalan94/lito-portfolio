@@ -9,7 +9,7 @@ const Hero: React.FC = () => {
         <img 
           src="./Profile.png" 
           alt="Lito Galan Jr"
-          className="w-60 h-60 rounded-full mx-auto border-4 border-slate-700 shadow-xl"
+          className="w-72 h-72 rounded-full mx-auto border-4 border-slate-700 shadow-xl"
         />
         <h1 className="text-5xl md:text-7xl font-black text-white tracking-tight">
           Lito Galan Jr
