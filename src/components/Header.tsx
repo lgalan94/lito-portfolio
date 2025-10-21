@@ -19,7 +19,7 @@ const Header: React.FC = () => {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-slate-900/80 backdrop-blur-md border-b border-slate-800">
-      <nav className="container mx-auto flex items-center justify-between py-4 px-4 md:px-8">
+      <nav className="container mx-auto flex items-center justify-between py-2 px-4 md:px-8">
         {/* Logo / Name */}
         <img
             src="android-chrome-192x192.png"

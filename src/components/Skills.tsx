@@ -4,7 +4,7 @@ import { motion, type Variants } from 'framer-motion';
 import { getSkills, type SkillsResponse } from '../services/skillApi';
 import type { Skill } from '../types';
 
-const CATEGORY_ORDER = ['Frontend', 'Backend', 'Tools', 'Other'];
+const PREFERRED_ORDER = ['Frontend', 'Backend', 'Database', 'Tools', 'Other'];
 
 const Skills: React.FC = () => {
   const [skillsData, setSkillsData] = useState<SkillsResponse | null>(null);
@@ -32,13 +32,26 @@ const Skills: React.FC = () => {
   };
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 50, scale: 0.8 },
-    show: { opacity: 1, y: 0, scale: 1, transition: { type: 'spring', stiffness: 100 } },
-  };
+  hidden: { opacity: 0, y: 30, scale: 0.7, filter: 'brightness(0.5)' },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    filter: 'brightness(1)',
+    transition: { type: 'spring', stiffness: 120, damping: 12 },
+  },
+};
+
 
   if (loading) return <p className="text-center text-white">Loading skills...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
   if (!skillsData) return <p className="text-center text-red-500">No skills found.</p>;
+
+  // Dynamically generate category order based on fetched data
+  const dynamicCategoryOrder = [
+    ...PREFERRED_ORDER.filter(cat => skillsData[cat] && skillsData[cat].length > 0),
+    ...Object.keys(skillsData).filter(cat => !PREFERRED_ORDER.includes(cat) && skillsData[cat].length > 0),
+  ];
 
   return (
     <section id="skills" className="py-20 md:py-32">
@@ -47,7 +60,7 @@ const Skills: React.FC = () => {
         <div className="w-24 h-1 bg-cyan-500 mx-auto mb-12"></div>
 
         <div className="space-y-12">
-          {CATEGORY_ORDER.map(category => {
+          {dynamicCategoryOrder.map(category => {
             const skills = skillsData[category] || [];
             if (skills.length === 0) return null;
 
@@ -72,7 +85,7 @@ const Skills: React.FC = () => {
                 >
                   {skills.map((skill: Skill) => (
                     <motion.div key={skill.name} variants={itemVariants}>
-                      <Card className="p-4 w-32 h-32 flex flex-col items-center justify-center text-center space-y-2 hover:shadow-xl hover:scale-[1.03] transition duration-300">
+                      <Card className="p-4 w-32 h-32 bg-white/15 flex flex-col items-center justify-center text-center space-y-2 hover:shadow-xl hover:scale-[1.03] transition duration-300">
                         {skill.icon && (
                           <img
                             src={skill.icon as string}
