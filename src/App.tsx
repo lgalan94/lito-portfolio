@@ -7,6 +7,7 @@ import Projects from './components/Projects';
 import Experience from './components/Experience';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import { Toaster } from 'sonner';
 
 function App() {
 
@@ -21,7 +22,9 @@ function App() {
         <Experience />
         <Contact />
         <Footer />
+        <Toaster position="top-right" richColors />
       </main>
+      
     </div>
   )
 }
