@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion, useAnimation, type Variants } from 'framer-motion';
 import { toast } from 'sonner';
 import { FaGithub, FaLinkedin, FaFacebook, FaGitlab } from 'react-icons/fa';
 import { getHeroData } from '../services/heroApi';
@@ -18,8 +17,6 @@ const Hero: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const controls = useAnimation();
-
   useEffect(() => {
     const fetchHero = async () => {
       setIsLoading(true);
@@ -28,7 +25,6 @@ const Hero: React.FC = () => {
       try {
         const data = await getHeroData(); // Public route
         setHeroData(data);
-       
       } catch (err: any) {
         console.error('Failed to load hero data:', err);
         setError(err.message || 'Failed to load profile.');
@@ -41,24 +37,11 @@ const Hero: React.FC = () => {
     fetchHero();
   }, []);
 
-  const containerVariants: Variants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { type: 'spring', stiffness: 100, damping: 20, staggerChildren: 0.1 },
-    },
-  };
-
-  const itemVariants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } };
-
   if (isLoading) {
     return (
       <section className="min-h-screen flex items-center justify-center text-center">
         <div className="w-72 h-72 rounded-full border-4 border-slate-700 shadow-xl flex items-center justify-center bg-slate-800">
-          <motion.p className="text-white" animate={{ opacity: [0, 1, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-            Loading Data...
-          </motion.p>
+          <p className="text-white animate-pulse">Loading Data...</p>
         </div>
       </section>
     );
@@ -69,7 +52,11 @@ const Hero: React.FC = () => {
       <section className="min-h-screen flex items-center justify-center text-center">
         <div className="space-y-6">
           <p className="text-red-500 text-xl p-8">{error || 'Failed to load data.'}</p>
-          <img src="/Profile.png" alt="Default Profile" className="w-72 h-72 rounded-full mx-auto border-4 border-red-700 shadow-xl" />
+          <img
+            src="/Profile.png"
+            alt="Default Profile"
+            className="w-72 h-72 rounded-full mx-auto border-4 border-red-700 shadow-xl"
+          />
         </div>
       </section>
     );
@@ -80,57 +67,49 @@ const Hero: React.FC = () => {
 
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center text-center">
-      <motion.div className="space-y-6" variants={containerVariants} initial="hidden" animate={controls}>
-        <motion.img
-          variants={itemVariants}
+      <div className="space-y-6">
+        <img
           src={heroData.profilePictureUrl || '/Profile.png'}
           alt={heroData.fullName}
           className="w-72 h-72 rounded-full mx-auto border-4 border-slate-700 shadow-xl"
         />
 
         <div className="space-y-2">
-          <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-black text-white tracking-tight">
+          <h1 className="text-5xl md:text-7xl font-black text-white tracking-tight">
             {heroData.fullName}
-          </motion.h1>
-          <motion.p variants={itemVariants} className="text-xl md:text-2xl font-medium text-cyan-400">
+          </h1>
+          <p className="text-xl md:text-2xl font-medium text-cyan-400">
             {heroData.jobTitle}
-          </motion.p>
-          <motion.p variants={itemVariants} className="max-w-2xl mx-auto text-slate-400">
-            {heroData.shortBio}
-          </motion.p>
+          </p>
+          <p className="max-w-2xl mx-auto text-slate-400">{heroData.shortBio}</p>
         </div>
 
         {/* Social Icons */}
-        <motion.div variants={itemVariants} className="flex justify-center space-x-4 text-2xl mt-4">
-          {socialLinks.map(([key, url]) => (
+        <div className="flex justify-center space-x-4 text-2xl mt-4">
+          {socialLinks.map(([key, url]) =>
             url ? (
-              <motion.a
+              <a
                 key={key}
-                href={url} // safe because we filtered undefined/null above
+                href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-cyan-400 transition-transform duration-300"
-                whileHover={{ scale: 1.2, color: '#22d3ee' }}
-                transition={{ type: 'spring', stiffness: 300 }}
+                className="text-slate-400 hover:text-cyan-400 transition-transform duration-300 hover:scale-110"
               >
                 {SOCIAL_ICON_MAP[key] || null}
-              </motion.a>
+              </a>
             ) : null
-          ))}
+          )}
+        </div>
 
-        </motion.div>
-
-        <motion.div variants={itemVariants} className="pt-4">
-          <motion.a
+        <div className="pt-4">
+          <a
             href="#projects"
             className="bg-cyan-500 text-white font-bold py-3 px-8 rounded-full hover:bg-cyan-600 transition-all duration-300 transform hover:scale-105"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
           >
             View My Work
-          </motion.a>
-        </motion.div>
-      </motion.div>
+          </a>
+        </div>
+      </div>
     </section>
   );
 };
