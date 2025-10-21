@@ -28,7 +28,7 @@ const Hero: React.FC = () => {
       try {
         const data = await getHeroData(); // Public route
         setHeroData(data);
-        controls.start('visible'); // start animation
+       
       } catch (err: any) {
         console.error('Failed to load hero data:', err);
         setError(err.message || 'Failed to load profile.');

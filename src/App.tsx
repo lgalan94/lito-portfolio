@@ -15,10 +15,9 @@ function App() {
     <div className="bg-slate-900 text-slate-300">
       <Header />
       <main className="container mx-auto px-4 md:px-8">
-        
+        <Hero />
         <About />
         <Skills />
-        <Hero />
         <Projects />
         <Experience />
         <Contact />
