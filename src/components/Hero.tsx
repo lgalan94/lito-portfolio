@@ -23,7 +23,7 @@ const Hero: React.FC = () => {
       setError(null);
 
       try {
-        const data = await getHeroData(); // Public route
+        const data = await getHeroData();
         setHeroData(data);
       } catch (err: any) {
         console.error('Failed to load hero data:', err);
@@ -62,30 +62,36 @@ const Hero: React.FC = () => {
     );
   }
 
-  // Convert socialLinks object to an array of key-value pairs
   const socialLinks = Object.entries(heroData.socialLinks || {}).filter(([_, url]) => url);
 
   return (
-    <section id="hero" className="min-h-screen flex items-center justify-center text-center">
-      <div className="space-y-6">
+    <section
+      id="hero"
+      className="min-h-screen flex flex-col md:flex-row items-center justify-center gap-10 px-6 md:px-16 text-center md:text-left"
+    >
+      {/* Left Side: Profile Image */}
+      <div className="flex-shrink-0">
         <img
           src={heroData.profilePictureUrl || '/Profile.png'}
           alt={heroData.fullName}
-          className="w-72 h-72 rounded-full mx-auto border-4 border-slate-700 shadow-xl"
+          className="w-64 h-64 md:w-80 md:h-80 rounded-full border-4 border-slate-700 shadow-xl object-cover"
         />
+      </div>
 
+      {/* Right Side: Text Content */}
+      <div className="space-y-6 max-w-2xl">
         <div className="space-y-2">
-          <h1 className="text-5xl md:text-7xl font-black text-white tracking-tight">
+          <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight">
             {heroData.fullName}
           </h1>
-          <p className="text-xl md:text-2xl font-medium text-cyan-400">
+          <p className="text-xl md:text-2xl font-semibold text-cyan-400">
             {heroData.jobTitle}
           </p>
-          <p className="max-w-2xl mx-auto text-slate-400">{heroData.shortBio}</p>
+          <p className="text-slate-400">{heroData.shortBio}</p>
         </div>
 
         {/* Social Icons */}
-        <div className="flex justify-center space-x-4 text-2xl mt-4">
+        <div className="flex justify-center md:justify-start space-x-5 text-2xl">
           {socialLinks.map(([key, url]) =>
             url ? (
               <a
@@ -101,6 +107,7 @@ const Hero: React.FC = () => {
           )}
         </div>
 
+        {/* Button */}
         <div className="pt-4">
           <a
             href="#projects"
