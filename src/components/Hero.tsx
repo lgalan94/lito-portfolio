@@ -77,7 +77,7 @@ const Hero: React.FC = () => {
   return (
     <section
       id="hero"
-      className="min-h-screen flex flex-col-reverse md:flex-row items-center justify-center gap-12 px-6 md:px-20 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 overflow-hidden"
+      className="mt-6 lg:mt-0 min-h-screen flex flex-col-reverse md:flex-row items-center justify-center gap-12 px-6 md:px-20 bg-none lg:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 overflow-hidden"
     >
       {/* Right Side: Text Content */}
       <motion.div
@@ -86,10 +86,10 @@ const Hero: React.FC = () => {
         initial="hidden"
         animate="visible"
       >
-        <h1 className="text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+        <h1 className="text-4xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
           {heroData.fullName}
         </h1>
-        <p className="text-2xl md:text-3xl font-semibold text-slate-300">{heroData.jobTitle}</p>
+        <p className="text-xl lg:text-2xl md:text-3xl font-semibold text-slate-300">{heroData.jobTitle}</p>
         <p className="text-slate-400 text-sm md:text-base">{heroData.shortBio}</p>
 
         {/* Social Icons */}
