@@ -56,7 +56,7 @@ const About: React.FC = () => {
           className="w-24 h-1 bg-cyan-500 mx-auto mb-8 origin-center"
         ></motion.div>
 
-        <motion.p variants={itemVariants} className="text-lg text-slate-400 leading-relaxed">
+        <motion.p variants={itemVariants} className="text-sm text-justify lg:text-lg text-slate-400 leading-relaxed">
           {error ? error : bio || 'Loading bio...'}
         </motion.p>
       </motion.div>
