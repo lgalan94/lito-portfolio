@@ -77,7 +77,7 @@ const Hero: React.FC = () => {
   return (
     <section
       id="hero"
-      className="mt-6 lg:mt-0 min-h-screen flex flex-col-reverse md:flex-row items-center justify-center gap-12 px-6 md:px-20 bg-none lg:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 overflow-hidden"
+      className="mt-0 min-h-screen flex flex-col-reverse md:flex-row items-center justify-center gap-12 px-6 md:px-20 bg-none lg:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 overflow-hidden"
     >
       {/* Right Side: Text Content */}
       <motion.div
