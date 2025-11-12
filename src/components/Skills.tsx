@@ -85,7 +85,7 @@ const Skills: React.FC = () => {
                 >
                   {skills.map((skill: Skill) => (
                     <motion.div key={skill.name} variants={itemVariants}>
-                      <Card className="p-4 w-32 h-32 bg-white/15 flex flex-col items-center justify-center text-center space-y-2 hover:shadow-xl hover:scale-[1.03] transition duration-300">
+                      <Card className="p-4 w-24 lg:w-32 h-24 lg:h-32 bg-white/15 flex flex-col items-center justify-center text-center space-y-2 hover:shadow-xl hover:scale-[1.03] transition duration-300">
                         {skill.icon && (
                           <img
                             src={skill.icon as string}

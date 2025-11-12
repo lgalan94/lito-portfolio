@@ -90,7 +90,7 @@ const Hero: React.FC = () => {
           {heroData.fullName}
         </h1>
         <p className="text-xl lg:text-2xl md:text-3xl font-semibold text-slate-300">{heroData.jobTitle}</p>
-        <p className="text-slate-400 text-sm md:text-base">{heroData.shortBio}</p>
+        {/* <p className="text-slate-400 text-sm md:text-base">{heroData.shortBio}</p> */}
 
         {/* Social Icons */}
         <div className="flex justify-center md:justify-start gap-6 text-2xl mt-4">

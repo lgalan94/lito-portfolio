@@ -1,4 +1,13 @@
-// 🔹 Social Links (matches schema)
+import type { ReactNode } from "react";
+
+export interface NavLink {
+  id: string;
+  name: string;
+  title?: string;
+  icon?: ReactNode; // 👈 Add this line
+}
+
+
 export interface SocialLinks {
   github?: string | null;
   linkedin?: string | null;

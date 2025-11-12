@@ -1,19 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-scroll";
 import { Menu, X } from "lucide-react";
+import { navLinks } from "../data/navLinks";
 
 const Header: React.FC = () => {
   const [activeSection, setActiveSection] = useState("hero");
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const navLinks = [
-    { name: "Home", to: "hero" },
-    { name: "About", to: "about" },
-    { name: "Skills", to: "skills" },
-    { name: "Projects", to: "projects" },
-    //{ name: "Experience", to: "experience" },
-    { name: "Contact", to: "contact" },
-  ];
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
@@ -32,15 +25,15 @@ const Header: React.FC = () => {
         <div className="hidden md:flex space-x-6 text-sm md:text-base font-medium text-slate-300">
           {navLinks.map((link) => (
             <Link
-              key={link.to}
-              to={link.to}
+              key={link.id}
+              to={link.id}
               smooth={true}
               duration={600}
               offset={-70}
               spy={true}
-              onSetActive={() => setActiveSection(link.to)}
+              onSetActive={() => setActiveSection(link.id)}
               className={`relative cursor-pointer transition-colors duration-300 ${
-                activeSection === link.to
+                activeSection === link.id
                   ? "text-cyan-400 after:w-full"
                   : "text-slate-400 hover:text-cyan-400"
               }`}
@@ -48,7 +41,7 @@ const Header: React.FC = () => {
               {link.name}
               <span
                 className={`absolute left-0 bottom-[-4px] h-[2px] bg-cyan-400 transition-all duration-300 ${
-                  activeSection === link.to ? "w-full" : "w-0 group-hover:w-full"
+                  activeSection === link.id ? "w-full" : "w-0 group-hover:w-full"
                 }`}
               ></span>
             </Link>
@@ -68,18 +61,18 @@ const Header: React.FC = () => {
           <div className="absolute top-full left-0 w-full bg-slate-900 border-t border-slate-800 flex flex-col items-center py-4 space-y-4 md:hidden">
             {navLinks.map((link) => (
               <Link
-                key={link.to}
-                to={link.to}
+                key={link.id}
+                to={link.id}
                 smooth={true}
                 duration={600}
                 offset={-70}
                 spy={true}
                 onSetActive={() => {
-                  setActiveSection(link.to);
+                  setActiveSection(link.id);
                   setMenuOpen(false);
                 }}
                 className={`relative cursor-pointer transition-colors duration-300 ${
-                  activeSection === link.to
+                  activeSection === link.id
                     ? "text-cyan-400 after:w-full"
                     : "text-slate-400 hover:text-cyan-400"
                 }`}
