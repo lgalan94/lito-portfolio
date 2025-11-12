@@ -4,14 +4,16 @@ import SkillBadge from './ui/SkillBadge';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { getAllProjects } from '../services/projectApi';
 import type { Project } from '../types';
+import { ExternalLink, Github } from 'lucide-react';
+
+const categoryOptions = ['All', 'Fullstack', 'Frontend', 'Backend', 'Landing', 'UI/UX', 'Other'];
 
 const Projects: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [activeFilter, setActiveFilter] = useState('All');
+  const [activeCategory, setActiveCategory] = useState('All');
 
-  // Fetch projects from backend
   useEffect(() => {
     const fetchProjects = async () => {
       try {
@@ -27,38 +29,25 @@ const Projects: React.FC = () => {
     fetchProjects();
   }, []);
 
-  // Generate all unique tags dynamically
-  const allTags = useMemo(() => {
-    const tags = new Set<string>();
-    projects.forEach(project => project.tags.forEach(tag => tags.add(tag)));
-    return ['All', ...Array.from(tags).sort()];
-  }, [projects]);
-
   const filteredProjects = useMemo(() => {
-    if (activeFilter === 'All') return projects;
-    return projects.filter(project => project.tags.includes(activeFilter));
-  }, [activeFilter, projects]);
+    if (activeCategory === 'All') return projects;
+    return projects.filter((project) => project.category === activeCategory);
+  }, [activeCategory, projects]);
 
-  // Framer Motion variants
   const projectCardVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.5, rotate: -10 },
-    visible: { 
-      opacity: 1, 
-      scale: 1, 
-      rotate: 0, 
-      transition: { type: 'spring', stiffness: 100, damping: 15, duration: 0.6 } 
+    hidden: { opacity: 0, scale: 0.8, y: 20 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: { type: 'spring', stiffness: 100, damping: 14 },
     },
-    exit: { 
-      opacity: 0, 
-      y: 50, 
-      scale: 0.8, 
-      transition: { duration: 0.2 } 
-    },
+    exit: { opacity: 0, y: 40, scale: 0.9, transition: { duration: 0.2 } },
   };
 
   const containerVariants = {
     hidden: {},
-    visible: { transition: { staggerChildren: 0.08 } },
+    visible: { transition: { staggerChildren: 0.07 } },
   };
 
   if (loading) return <p className="text-center text-white">Loading projects...</p>;
@@ -67,61 +56,116 @@ const Projects: React.FC = () => {
 
   return (
     <section id="projects" className="py-20 md:py-32">
-      <div className="max-w-6xl mx-auto text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">Featured Projects</h2>
-        <div className="w-24 h-1 bg-cyan-500 mx-auto mb-8 rounded"></div>
+      <div className="max-w-7xl mx-auto px-4 text-center">
+        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          🚀 Featured Projects
+        </h2>
+        <div className="w-24 h-1 bg-cyan-500 mx-auto mb-10 rounded-full"></div>
 
-        {/* Filter Buttons */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12" role="group" aria-label="Project filters">
-          {allTags.map(tag => (
+        {/* ✅ Category Filter (Styled as Tag Buttons) */}
+        <div className="flex flex-wrap justify-center gap-2 mb-14" role="group" aria-label="Category filters">
+          {categoryOptions.map((category) => (
             <button
-              key={tag}
-              onClick={() => setActiveFilter(tag)}
-              className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 focus:ring-cyan-500 ${
-                activeFilter === tag ? 'bg-cyan-500 text-white shadow-md' : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+              key={category}
+              onClick={() => setActiveCategory(category)}
+              className={`px-4 py-2 text-sm font-medium rounded-full border transition-all duration-300 focus:outline-none ${
+                activeCategory === category
+                  ? 'bg-cyan-500 border-cyan-400 text-white shadow-lg shadow-cyan-500/30'
+                  : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700 hover:border-cyan-400/40'
               }`}
-              aria-pressed={activeFilter === tag}
+              aria-pressed={activeCategory === category}
             >
-              {tag}
+              {category}
             </button>
           ))}
         </div>
 
-        {/* Projects Grid */}
+        {/* ✅ Projects Grid */}
         <motion.div
           layout
-          key={activeFilter} // Forces remount to retrigger animations
-          className="grid md:grid-cols-2 gap-8"
+          key={activeCategory}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
           <AnimatePresence>
-            {filteredProjects.map(project => (
-              <motion.div
-                key={project._id}
-                variants={projectCardVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                layout
+            {filteredProjects.length > 0 ? (
+              filteredProjects.map((project) => (
+                <motion.div
+                  key={project._id}
+                  variants={projectCardVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  layout
+                >
+                  <Card className="bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 rounded-xl overflow-hidden flex flex-col h-full group">
+                    <div className="relative overflow-hidden">
+                      <img
+                        src={project.imageUrl}
+                        alt={project.title}
+                        className="w-full h-44 object-cover rounded-t-xl transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <span className="absolute top-3 left-3 bg-cyan-500/80 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur-md">
+                        {project.category}
+                      </span>
+                    </div>
+
+                    <div className="p-5 flex flex-col flex-grow text-left">
+                      <h3 className="text-lg font-semibold text-white mb-2">
+                        {project.title}
+                      </h3>
+                      <p className="text-slate-400 text-sm flex-grow mb-4 line-clamp-3">
+                        {project.description}
+                      </p>
+
+                      {/* ✅ Tags */}
+                      <div className="flex flex-wrap gap-1.5 mb-5">
+                        {project.tags.slice(0, 4).map((tag) => (
+                          <SkillBadge key={tag}>{tag}</SkillBadge>
+                        ))}
+                      </div>
+
+                      {/* ✅ Buttons */}
+                      <div className="flex justify-between items-center mt-auto">
+                        {project.liveUrl && (
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:from-cyan-400 hover:to-blue-400 transition-all"
+                          >
+                            <ExternalLink size={14} />
+                            Live
+                          </a>
+                        )}
+                        {project.repoUrl && (
+                          <a
+                            href={project.repoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-full bg-slate-800 text-slate-300 border border-slate-700 hover:border-cyan-500 hover:text-cyan-400 transition-all"
+                          >
+                            <Github size={14} />
+                            Source
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </Card>
+                </motion.div>
+              ))
+            ) : (
+              <motion.p
+                key="no-category-projects"
+                className="text-center text-slate-400 col-span-full py-10"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
               >
-                <Card className="text-left flex flex-col h-full">
-                  <img src={project.imageUrl} alt={project.title} className="w-full h-56 object-cover" />
-                  <div className="p-6 flex flex-col flex-grow">
-                    <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
-                    <p className="text-slate-400 mb-4 flex-grow">{project.description}</p>
-                    <div className="mb-4">
-                      {project.tags.map(tag => <SkillBadge key={tag}>{tag}</SkillBadge>)}
-                    </div>
-                    <div className="flex space-x-4 mt-auto">
-                      {project.liveUrl && <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 font-semibold">Live Demo</a>}
-                      {project.repoUrl && <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:text-cyan-300 font-semibold">Source Code</a>}
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
-            ))}
+                No project in this category.
+              </motion.p>
+            )}
           </AnimatePresence>
         </motion.div>
       </div>

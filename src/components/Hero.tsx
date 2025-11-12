@@ -21,7 +21,6 @@ const Hero: React.FC = () => {
     const fetchHero = async () => {
       setIsLoading(true);
       setError(null);
-
       try {
         const data = await getHeroData();
         setHeroData(data);
@@ -33,13 +32,12 @@ const Hero: React.FC = () => {
         setIsLoading(false);
       }
     };
-
     fetchHero();
   }, []);
 
   if (isLoading) {
     return (
-      <section className="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
+      <section className="min-h-screen flex items-center justify-center bg-gray-900">
         <div className="w-72 h-72 rounded-full border-4 border-slate-700 shadow-xl flex items-center justify-center bg-slate-800">
           <p className="text-white animate-pulse text-lg font-medium">Loading...</p>
         </div>
@@ -77,20 +75,29 @@ const Hero: React.FC = () => {
   return (
     <section
       id="hero"
-      className="mt-0 min-h-screen flex flex-col-reverse md:flex-row items-center justify-center gap-12 px-6 md:px-20 bg-none lg:bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 overflow-hidden"
+      className="relative min-h-screen flex flex-col-reverse md:flex-row items-center justify-center gap-12 px-6 md:px-20 overflow-hidden"
+     /*  style={{
+        backgroundImage: "url('/bg.png')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }} */
     >
-      {/* Right Side: Text Content */}
+      {/* Dark overlay */}
+      <div className="absolute inset-0  z-0" />
+
+      {/* Right Side: Text */}
       <motion.div
-        className="space-y-6 max-w-xl text-center md:text-left"
+        className="relative z-10 space-y-6 max-w-xl text-center md:text-left"
         variants={textVariants}
         initial="hidden"
         animate="visible"
       >
-        <h1 className="text-4xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+        <h1 className="uppercase text-4xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
           {heroData.fullName}
         </h1>
-        <p className="text-xl lg:text-2xl md:text-3xl font-semibold text-slate-300">{heroData.jobTitle}</p>
-        {/* <p className="text-slate-400 text-sm md:text-base">{heroData.shortBio}</p> */}
+        <p className="text-xl lg:text-2xl md:text-3xl font-semibold text-slate-200">{heroData.jobTitle}</p>
+        <p className="text-slate-300 text-sm md:text-base">{heroData.shortBio}</p>
 
         {/* Social Icons */}
         <div className="flex justify-center md:justify-start gap-6 text-2xl mt-4">
@@ -101,7 +108,7 @@ const Hero: React.FC = () => {
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-cyan-400 transition-transform duration-300"
+                className="text-slate-300 hover:text-cyan-400 transition-transform duration-300"
                 whileHover={{ scale: 1.3 }}
               >
                 {SOCIAL_ICON_MAP[key] || null}
@@ -110,8 +117,8 @@ const Hero: React.FC = () => {
           )}
         </div>
 
-        {/* Button */}
-        <motion.div className="mt-16" whileHover={{ scale: 1.05 }}>
+        {/* CTA Button */}
+        <motion.div className="mt-12" whileHover={{ scale: 1.05 }}>
           <a
             href="#projects"
             className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform"
@@ -123,18 +130,26 @@ const Hero: React.FC = () => {
 
       {/* Left Side: Profile Image */}
       <motion.div
-        className="flex-shrink-0 relative"
+        className="relative z-10 flex-shrink-0 group"
         variants={imageVariants}
         initial="hidden"
         animate="visible"
-        whileHover={{ scale: 1.05 }}
+        whileHover={{ scale: 1.08 }}
       >
-        <div className="absolute -inset-2 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 blur-xl opacity-50" />
-        <img
-          src={heroData.profilePictureUrl || '/Profile.png'}
-          alt={heroData.fullName}
-          className="relative w-64 h-64 md:w-80 md:h-80 rounded-full border-4 border-slate-700 shadow-2xl object-cover"
-        />
+        {/* Gradient glow */}
+        <div className="absolute -inset-4 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 blur-3xl opacity-60 transition-all duration-500 group-hover:blur-2xl" />
+
+        {/* Image container */}
+        <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-slate-700 shadow-2xl bg-slate-900">
+          <img
+            src={heroData.profilePictureUrl || '/Profile.png'}
+            alt={heroData.fullName}
+            className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
+
+        {/* Floating accent ring */}
+        <div className="absolute -inset-6 rounded-full border-2 border-cyan-400 opacity-20 animate-pulse"></div>
       </motion.div>
     </section>
   );

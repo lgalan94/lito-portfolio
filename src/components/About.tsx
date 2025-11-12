@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, type Variants } from 'framer-motion';
+import { Download } from 'lucide-react'; // ✅ Import icon
 import { getHeroData } from '../services/heroApi';
 import type { HeroData } from '../types';
 
@@ -13,8 +14,8 @@ const About: React.FC = () => {
   useEffect(() => {
     const fetchBio = async () => {
       try {
-        const data: HeroData & { resumeUrl?: string } = await getHeroData(); // include resumeUrl
-        setBio(data.bio); 
+        const data: HeroData & { resumeUrl?: string } = await getHeroData();
+        setBio(data.bio);
         setResumeUrl(data.resumeUrl || null);
       } catch (err: any) {
         console.error(err);
@@ -43,7 +44,6 @@ const About: React.FC = () => {
     tap: { scale: 0.95 },
   };
 
-  // ✅ Download resume from existing URL with custom filename
   const handleDownloadResume = async () => {
     if (!resumeUrl) return;
     setIsDownloading(true);
@@ -55,9 +55,7 @@ const About: React.FC = () => {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-
-      // Always use your name as filename
-      a.download = 'Lito-Galan-Jr-Resume.pdf';
+      a.download = 'Lito-Galan-Jr-Resume.pdf'; // ✅ Filename
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -107,9 +105,10 @@ const About: React.FC = () => {
             variants={buttonVariants}
             whileHover="hover"
             whileTap="tap"
-            className="mt-8 inline-flex items-center justify-center bg-transparent text-cyan-400 border border-cyan-400 rounded-md px-8 py-3 font-medium hover:bg-cyan-500/10 transition-colors duration-300 disabled:opacity-50"
+            className="mt-8 inline-flex items-center justify-center gap-2 bg-transparent text-cyan-400 border border-cyan-400 rounded-md px-8 py-3 font-medium hover:bg-cyan-500/10 transition-colors duration-300 disabled:opacity-50"
             disabled={isDownloading}
           >
+            <Download className="w-5 h-5" /> {/* ✅ Icon */}
             {isDownloading ? 'Downloading...' : 'Download Resume'}
           </motion.button>
         )}
