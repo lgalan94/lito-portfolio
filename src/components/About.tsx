@@ -57,7 +57,7 @@ const About: React.FC = () => {
       a.href = url;
 
       // Always use your name as filename
-      a.download = 'Lito-Galan-Jr-Resume';
+      a.download = 'Lito-Galan-Jr-Resume.pdf';
       document.body.appendChild(a);
       a.click();
       a.remove();
