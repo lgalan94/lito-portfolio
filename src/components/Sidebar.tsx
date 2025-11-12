@@ -22,7 +22,12 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onNavLinkClick }) => {
           onSetActive={() => onNavLinkClick("hero")}
           className="text-cyan-400 text-2xl lg:text-3xl font-black mb-16 cursor-pointer hover:text-cyan-300 transition"
         >
-          LG
+          <img
+            src="logo.png"
+            className="h-14 w-14 cursor-pointer"
+            alt="Logo"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          />
         </Link>
 
         {/* Navigation */}
