@@ -46,7 +46,7 @@ const Skills: React.FC = () => {
   ];
 
   return (
-    <section id="skills" className="py-20 md:py-32 bg-slate-950 relative overflow-hidden">
+    <section id="skills" className="py-20 md:py-32 relative overflow-hidden">
       {/* background glow */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_40%,rgba(34,211,238,0.08),transparent_70%)]"></div>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_60%,rgba(6,182,212,0.08),transparent_70%)]"></div>

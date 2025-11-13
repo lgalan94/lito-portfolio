@@ -62,41 +62,33 @@ const Hero: React.FC = () => {
 
   const socialLinks = Object.entries(heroData.socialLinks || {}).filter(([_, url]) => url);
 
-  const imageVariants: Variants = {
-    hidden: { opacity: 0, x: -60 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: 'easeOut' } },
-  };
-
-  const textVariants: Variants = {
-    hidden: { opacity: 0, x: 60 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: 'easeOut', delay: 0.3 } },
+  // ✨ Updated animation variants for slow zoom-out
+  const zoomOutVariants: Variants = {
+    hidden: { opacity: 0, scale: 1.2 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 1.2, ease: 'easeOut' } },
   };
 
   return (
     <section
       id="hero"
       className="relative min-h-screen flex flex-col-reverse md:flex-row items-center justify-center gap-12 px-6 md:px-20 overflow-hidden"
-     /*  style={{
-        backgroundImage: "url('/bg.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-      }} */
     >
-      {/* Dark overlay */}
-      <div className="absolute inset-0  z-0" />
+      {/* Background overlay */}
+      <div className="absolute inset-0 z-0" />
 
       {/* Right Side: Text */}
       <motion.div
         className="relative z-10 space-y-6 max-w-xl text-center md:text-left"
-        variants={textVariants}
+        variants={zoomOutVariants}
         initial="hidden"
         animate="visible"
       >
         <h1 className="uppercase text-4xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
           {heroData.fullName}
         </h1>
-        <p className="text-xl lg:text-2xl md:text-3xl font-semibold text-slate-200">{heroData.jobTitle}</p>
+        <p className="text-xl lg:text-2xl md:text-3xl font-semibold text-slate-200">
+          {heroData.jobTitle}
+        </p>
         <p className="text-slate-300 text-sm md:text-base">{heroData.shortBio}</p>
 
         {/* Social Icons */}
@@ -131,15 +123,12 @@ const Hero: React.FC = () => {
       {/* Left Side: Profile Image */}
       <motion.div
         className="relative z-10 flex-shrink-0 group"
-        variants={imageVariants}
+        variants={zoomOutVariants}
         initial="hidden"
         animate="visible"
         whileHover={{ scale: 1.08 }}
       >
-        {/* Gradient glow */}
         <div className="absolute -inset-4 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 blur-3xl opacity-60 transition-all duration-500 group-hover:blur-2xl" />
-
-        {/* Image container */}
         <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-slate-700 shadow-2xl bg-slate-900">
           <img
             src={heroData.profilePictureUrl || '/Profile.png'}
@@ -147,8 +136,6 @@ const Hero: React.FC = () => {
             className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
           />
         </div>
-
-        {/* Floating accent ring */}
         <div className="absolute -inset-6 rounded-full border-2 border-cyan-400 opacity-20 animate-pulse"></div>
       </motion.div>
     </section>

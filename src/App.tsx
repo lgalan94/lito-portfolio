@@ -9,6 +9,7 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import { Toaster } from "sonner";
 import Sidebar from "./components/Sidebar";
+import NewsletterCTA from "./components/NewsletterCTA";
 
 function App() {
   const [activeSection, setActiveSection] = useState<string>("hero");
@@ -28,6 +29,7 @@ function App() {
         <Skills />
         <Projects />
         {/* <Experience /> */}
+        <NewsletterCTA />
         <Contact />
         <Footer />
         <Toaster position="top-right" richColors />
