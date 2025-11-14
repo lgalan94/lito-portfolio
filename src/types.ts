@@ -27,6 +27,7 @@ export interface HeroData {
   profilePictureUrl: string;
   profilePictureUrlPublicId?: string | null;
   socialLinks: SocialLinks;
+  resumeUrl: string;
 }
 
 export interface Employment {

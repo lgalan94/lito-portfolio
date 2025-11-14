@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion, type Variants } from 'framer-motion';
 import { toast } from 'sonner';
-import { FaGithub, FaLinkedin, FaFacebook, FaGitlab } from 'react-icons/fa';
+import { Github, Linkedin, Facebook, Gitlab } from 'lucide-react';
 import { getHeroData } from '../services/heroApi';
 import type { HeroData } from '../types';
 
 const SOCIAL_ICON_MAP: Record<string, React.ReactNode> = {
-  github: <FaGithub />,
-  linkedin: <FaLinkedin />,
-  facebook: <FaFacebook />,
-  gitlab: <FaGitlab />,
+  github: <Github />,
+  linkedin: <Linkedin />,
+  facebook: <Facebook />,
+  gitlab: <Gitlab />,
 };
 
 const Hero: React.FC = () => {
@@ -62,7 +62,6 @@ const Hero: React.FC = () => {
 
   const socialLinks = Object.entries(heroData.socialLinks || {}).filter(([_, url]) => url);
 
-  // ✨ Updated animation variants for slow zoom-out
   const zoomOutVariants: Variants = {
     hidden: { opacity: 0, scale: 1.2 },
     visible: { opacity: 1, scale: 1, transition: { duration: 1.2, ease: 'easeOut' } },
@@ -83,9 +82,25 @@ const Hero: React.FC = () => {
         initial="hidden"
         animate="visible"
       >
-        <h1 className="uppercase text-4xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
-          {heroData.fullName}
+        <h1
+          className="
+            uppercase 
+            text-5xl lg:text-[80px] 
+            font-extrabold 
+            bg-gradient-to-r 
+            from-black-50 
+            via-blue-500 
+            to-cyan-600 
+            bg-clip-text 
+            text-transparent 
+            font-['Poppins'] 
+            tracking-tight
+            animated-gradient
+          "
+        >
+          {heroData.fullName.replace(/\s+/g, '')}
         </h1>
+
         <p className="text-xl lg:text-2xl md:text-3xl font-semibold text-slate-200">
           {heroData.jobTitle}
         </p>
@@ -120,24 +135,38 @@ const Hero: React.FC = () => {
         </motion.div>
       </motion.div>
 
-      {/* Left Side: Profile Image */}
       <motion.div
-        className="relative z-10 flex-shrink-0 group"
+        className="relative z-10 flex-shrink-0 group flex flex-col items-center"
         variants={zoomOutVariants}
         initial="hidden"
         animate="visible"
         whileHover={{ scale: 1.08 }}
       >
-        <div className="absolute -inset-4 rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 blur-3xl opacity-60 transition-all duration-500 group-hover:blur-2xl" />
-        <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-full overflow-hidden border-4 border-slate-700 shadow-2xl bg-slate-900">
+        {/* Glowing Background Blobs */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute w-72 h-72 bg-cyan-400/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute w-56 h-56 bg-blue-500/20 rounded-full blur-2xl animate-pulse delay-150" />
+          <div className="absolute w-40 h-40 bg-purple-500/20 rounded-full blur-xl animate-pulse delay-300" />
+        </div>
+
+        {/* Logo Container */}
+        <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden border-4 border-slate-700 shadow-2xl bg-slate-900">
           <img
-            src={heroData.profilePictureUrl || '/Profile.png'}
-            alt={heroData.fullName}
+            src="./logo.png"
+            alt="LOGO"
             className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
           />
+          {/* Optional subtle overlay */}
+          <div className="absolute inset-0 bg-black/10 mix-blend-overlay rounded-2xl pointer-events-none" />
         </div>
-        <div className="absolute -inset-6 rounded-full border-2 border-cyan-400 opacity-20 animate-pulse"></div>
+
+        {/* Tagline */}
+        <p className="mt-4 text-sm md:text-base text-slate-200 font-semibold text-center">
+          Innovate. Accelerate. Repeat.
+        </p>
       </motion.div>
+
+      
     </section>
   );
 };

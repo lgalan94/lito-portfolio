@@ -1,67 +1,55 @@
 import React, { useState, useEffect } from 'react';
 import { motion, type Variants } from 'framer-motion';
-import { Download } from 'lucide-react'; // ✅ Import icon
+import { Download } from 'lucide-react';
 import { getHeroData } from '../services/heroApi';
 import type { HeroData } from '../types';
 
 const About: React.FC = () => {
-  const [bio, setBio] = useState<string>('');
-  const [error, setError] = useState<string | null>(null);
+  const [bio, setBio] = useState('');
+  const [profileImage, setProfileImage] = useState<string | null>(null);
   const [resumeUrl, setResumeUrl] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [isDownloading, setIsDownloading] = useState(false);
 
-  // Fetch hero data on mount
   useEffect(() => {
-    const fetchBio = async () => {
+    const fetchData = async () => {
       try {
         const data: HeroData & { resumeUrl?: string } = await getHeroData();
         setBio(data.bio);
+        setProfileImage(data.profilePictureUrl || '/Profile.png');
         setResumeUrl(data.resumeUrl || null);
-      } catch (err: any) {
-        console.error(err);
+      } catch {
         setError('Failed to load bio.');
       }
     };
-    fetchBio();
+    fetchData();
   }, []);
 
-  const containerVariants: Variants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { staggerChildren: 0.2, duration: 0.6, ease: 'easeOut' } 
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  const fadeUp: Variants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
   };
 
   const buttonVariants = {
-    hover: { scale: 1.05, boxShadow: '0px 0px 8px rgba(0,255,255,0.6)' },
+    hover: { scale: 1.06 },
     tap: { scale: 0.95 },
   };
 
   const handleDownloadResume = async () => {
     if (!resumeUrl) return;
     setIsDownloading(true);
+
     try {
       const response = await fetch(resumeUrl);
-      if (!response.ok) throw new Error('Failed to download resume');
-
       const blob = await response.blob();
+
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'Lito-Galan-Jr-Resume.pdf'; // ✅ Filename
-      document.body.appendChild(a);
+      a.download = 'Lito-Galan-Jr-Resume.pdf';
       a.click();
-      a.remove();
       window.URL.revokeObjectURL(url);
-    } catch (err: any) {
-      console.error(err);
+    } catch {
       setError('Failed to download resume.');
     } finally {
       setIsDownloading(false);
@@ -69,49 +57,98 @@ const About: React.FC = () => {
   };
 
   return (
-    <section id="about" className="py-20 md:py-32">
-      <motion.div 
-        className="max-w-4xl mx-auto text-center"
-        variants={containerVariants}
+    <section id="about" className="relative py-6 lg:py-24 overflow-hidden">
+
+      {/* Decorative glowing blobs */}
+      <div className="absolute top-10 -left-10 w-72 h-72 bg-cyan-500/20 rounded-full blur-[130px]" />
+      <div className="absolute bottom-0 -right-10 w-80 h-80 bg-blue-600/20 rounded-full blur-[130px]" />
+
+      <motion.div
+        className="relative max-w-6xl mx-auto px-6"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
+        variants={fadeUp}
+        viewport={{ once: true, amount: 0.3 }}
       >
-        <motion.h2 
-          variants={itemVariants} 
-          className="text-3xl md:text-4xl font-bold text-white mb-4"
-        >
-          About Me
-        </motion.h2>
+        <div className="backdrop-blur-xl bg-white/5 border border-white/10 shadow-xl rounded-3xl p-10 md:p-14">
 
-        <motion.div
-          initial={{ scaleX: 0 }}
-          whileInView={{ scaleX: 1 }}
-          viewport={{ once: true, amount: 0.8 }}
-          transition={{ duration: 0.5 }}
-          className="w-24 h-1 bg-cyan-500 mx-auto mb-8 origin-center"
-        ></motion.div>
+          {/* Title */}
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white text-center tracking-wide">
+            About Me
+          </h2>
+          <div className="w-28 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto mt-4 mb-12 rounded-full" />
 
-        <motion.p 
-          variants={itemVariants} 
-          className="text-sm text-justify lg:text-lg text-slate-400 leading-relaxed"
-        >
-          {error ? error : bio || 'Loading bio...'}
-        </motion.p>
+          {/* Content Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
-        {resumeUrl && (
-          <motion.button
-            onClick={handleDownloadResume}
-            variants={buttonVariants}
-            whileHover="hover"
-            whileTap="tap"
-            className="mt-8 inline-flex items-center justify-center gap-2 bg-transparent text-cyan-400 border border-cyan-400 rounded-md px-8 py-3 font-medium hover:bg-cyan-500/10 transition-colors duration-300 disabled:opacity-50"
-            disabled={isDownloading}
+            {/* Left Side — Profile Image */}
+          <motion.div
+            variants={fadeUp}
+            className="flex justify-center"
           >
-            <Download className="w-5 h-5" /> {/* ✅ Icon */}
-            {isDownloading ? 'Downloading...' : 'Download Resume'}
-          </motion.button>
-        )}
+            <div className="relative group">
+              {/* Glow Background */}
+              <div className="absolute -inset-4 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-2xl blur-2xl opacity-40 group-hover:opacity-60 transition duration-500" />
+
+              {/* Animated Outline */}
+              <div className="absolute -inset-2 border-2 border-cyan-400/40 rounded-full animate-pulse" />
+
+              <img
+                src={profileImage || '/Profile.png'}
+                alt="Profile"
+                className="relative w-56 h-56 md:w-72 md:h-72 object-cover rounded-full 
+                          border-[3px] border-slate-800 shadow-2xl 
+                          transition-transform duration-500 group-hover:scale-105"
+              />
+            </div>
+          </motion.div>
+
+
+            {/* Right Side — Bio + Resume Button */}
+            
+            {/* Right Side — Bio + Resume Button */}
+          <motion.div
+            variants={fadeUp}
+            className="text-slate-300 leading-relaxed text-base md:text-md"
+          >
+            <p className="text-justify">
+              {error ? error : bio || 'Loading bio...'}
+            </p>
+
+            {resumeUrl && (
+              <motion.button
+                onClick={handleDownloadResume}
+                variants={buttonVariants}
+                whileHover="hover"
+                whileTap="tap"
+                className="mt-8                 
+                  inline-flex
+                  items-center
+                  gap-2
+                  px-8
+                  py-3
+                  bg-gradient-to-r from-cyan-500 to-blue-600
+                  text-white
+                  font-semibold
+                  rounded-xl
+                  shadow-lg
+                  hover:opacity-90
+                  transition-all
+                  duration-300
+                  disabled:opacity-50
+                "
+                disabled={isDownloading}
+              >
+                <Download className="w-3 lg:w-5 h-3 lg:h-5" />
+                {isDownloading ? "Downloading..." : "Download Resume"}
+              </motion.button>
+            )}
+          </motion.div>
+
+
+          </div>
+
+        </div>
       </motion.div>
     </section>
   );

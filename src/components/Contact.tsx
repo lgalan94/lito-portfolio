@@ -75,7 +75,7 @@ const Contact: React.FC = () => {
 
   return (
     <section
-      id="contact"
+      
       className="relative py-24 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden"
     >
       <div className="max-w-6xl mx-auto px-6 md:px-10">

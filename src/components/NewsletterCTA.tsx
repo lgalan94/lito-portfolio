@@ -1,36 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-import api from "../services/api";
-import { Mail, Github, Linkedin, Facebook } from "lucide-react";
-import { getHeroData } from "../services/heroApi";
-import type { HeroData } from "../types";
-
-const SOCIAL_ICON_MAP: Record<string, React.ReactNode> = {
-  github: <Github size={22} />,
-  linkedin: <Linkedin size={22} />,
-  facebook: <Facebook size={22} />,
-  email: <Mail size={22} />,
-};
+/* import api from "../services/api"; */
 
 const NewsletterCTA: React.FC = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [heroData, setHeroData] = useState<HeroData | null>(null);
 
-  useEffect(() => {
-    const fetchHero = async () => {
-      try {
-        const data = await getHeroData();
-        setHeroData(data);
-      } catch (err) {
-        console.error("Failed to load social links:", err);
-      }
-    };
-    fetchHero();
-  }, []);
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  /* const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
 
@@ -45,14 +22,20 @@ const NewsletterCTA: React.FC = () => {
     } finally {
       setLoading(false);
     }
+  }; */
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    toast.success("Subscribed successfully!", { duration: 3000 });
+    setEmail("");
+    setLoading(false)
   };
 
-  const socialLinks = Object.entries(heroData?.socialLinks || {}).filter(
-    ([, url]) => url
-  );
-
   return (
-    <section className="relative py-24 bg-slate-900 text-white overflow-hidden">
+    <section
+      id="contact"
+      className="relative py-24 bg-slate-900 text-white overflow-hidden"
+    >
       {/* Gradient Glow Background */}
       <motion.div
         className="absolute -inset-16 rounded-3xl bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 opacity-30 blur-3xl"
@@ -70,6 +53,7 @@ const NewsletterCTA: React.FC = () => {
         >
           Stay Updated 📩
         </motion.h2>
+
         <motion.p
           className="text-slate-300 mb-8 max-w-xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
@@ -101,27 +85,9 @@ const NewsletterCTA: React.FC = () => {
             }`}
             whileTap={{ scale: 0.97 }}
           >
-            <Mail size={18} />
             {loading ? "Subscribing..." : "Subscribe"}
           </motion.button>
         </motion.form>
-
-        {/* Dynamic Social Links */}
-        {socialLinks.length > 0 && (
-          <div className="flex justify-center gap-5 mt-8 z-10 relative">
-            {socialLinks.map(([key, url]) => (
-              <a
-                key={key}
-                href={url!}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 rounded-full bg-slate-800 border border-slate-700 hover:bg-cyan-500/10 hover:border-cyan-400 hover:text-cyan-400 transition-all"
-              >
-                {SOCIAL_ICON_MAP[key] || <Mail size={22} />}
-              </a>
-            ))}
-          </div>
-        )}
       </div>
     </section>
   );
