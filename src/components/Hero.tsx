@@ -29,18 +29,33 @@ const Hero: React.FC = () => {
         setError(err.message || 'Failed to load profile.');
         toast.error(err.message || 'Failed to load profile.');
       } finally {
-        setIsLoading(false);
+        setTimeout(() => setIsLoading(false), 300);
       }
     };
     fetchHero();
   }, []);
 
+  // Skeleton loader
   if (isLoading) {
     return (
-      <section className="min-h-screen flex items-center justify-center bg-gray-900">
-        <div className="w-72 h-72 rounded-full border-4 border-slate-700 shadow-xl flex items-center justify-center bg-slate-800">
-          <p className="text-white animate-pulse text-lg font-medium">Loading...</p>
+      <section className="min-h-screen flex flex-col-reverse md:flex-row items-center justify-center gap-12 px-6 md:px-20">
+        {/* Text Skeleton */}
+        <div className="space-y-4 max-w-xl w-full">
+          <div className="h-12 w-3/4 bg-slate-700 rounded-md animate-pulse" />
+          <div className="h-8 w-1/2 bg-slate-600 rounded-md animate-pulse" />
+          <div className="h-4 w-full bg-slate-700 rounded-md animate-pulse" />
+          <div className="h-4 w-5/6 bg-slate-700 rounded-md animate-pulse" />
+          <div className="flex gap-4 mt-4">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="h-10 w-10 bg-slate-600 rounded-full animate-pulse" />
+            ))}
+          </div>
+          {/* Skeleton for CTA button */}
+          <div className="mt-8 h-12 w-48 bg-slate-700 rounded-full animate-pulse" />
         </div>
+
+        {/* Image Skeleton */}
+        <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl bg-slate-800 animate-pulse" />
       </section>
     );
   }
@@ -135,6 +150,7 @@ const Hero: React.FC = () => {
         </motion.div>
       </motion.div>
 
+      {/* Logo / Right Side */}
       <motion.div
         className="relative z-10 flex-shrink-0 group flex flex-col items-center"
         variants={zoomOutVariants}
@@ -156,7 +172,6 @@ const Hero: React.FC = () => {
             alt="LOGO"
             className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
           />
-          {/* Optional subtle overlay */}
           <div className="absolute inset-0 bg-black/10 mix-blend-overlay rounded-2xl pointer-events-none" />
         </div>
 
@@ -165,8 +180,6 @@ const Hero: React.FC = () => {
           Innovate. Accelerate. Repeat.
         </p>
       </motion.div>
-
-      
     </section>
   );
 };
