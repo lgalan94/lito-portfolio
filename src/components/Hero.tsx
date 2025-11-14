@@ -40,19 +40,23 @@ const Hero: React.FC = () => {
     return (
       <section className="min-h-screen flex flex-col-reverse md:flex-row items-center justify-center gap-12 px-6 md:px-20">
         {/* Text Skeleton */}
-        <div className="space-y-4 max-w-xl w-full">
-          <div className="h-12 w-3/4 bg-slate-700 rounded-md animate-pulse" />
-          <div className="h-8 w-1/2 bg-slate-600 rounded-md animate-pulse" />
+  
+        <div className="space-y-4 max-w-xl w-full mx-auto md:mx-0 text-center md:text-left">
+          <div className="h-12 w-3/4 bg-slate-700 rounded-md animate-pulse mx-auto md:mx-0" />
+          <div className="h-8 w-1/2 bg-slate-600 rounded-md animate-pulse mx-auto md:mx-0" />
           <div className="h-4 w-full bg-slate-700 rounded-md animate-pulse" />
-          <div className="h-4 w-5/6 bg-slate-700 rounded-md animate-pulse" />
-          <div className="flex gap-4 mt-4">
+          <div className="h-4 w-5/6 bg-slate-700 rounded-md animate-pulse mx-auto md:mx-0" />
+
+          <div className="flex justify-center md:justify-start gap-4 mt-4">
             {[...Array(4)].map((_, i) => (
               <div key={i} className="h-10 w-10 bg-slate-600 rounded-full animate-pulse" />
             ))}
           </div>
-          {/* Skeleton for CTA button */}
-          <div className="mt-8 h-12 w-48 bg-slate-700 rounded-full animate-pulse" />
+
+          {/* Skeleton CTA */}
+          <div className="mt-8 h-12 w-48 bg-slate-700 rounded-full animate-pulse mx-auto md:mx-0" />
         </div>
+
 
         {/* Image Skeleton */}
         <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl bg-slate-800 animate-pulse" />
@@ -62,7 +66,7 @@ const Hero: React.FC = () => {
 
   if (error || !heroData) {
     return (
-      <section className="min-h-screen flex items-center justify-center text-center bg-slate-900">
+      <section className="min-h-screen flex items-center justify-center text-center ">
         <div className="space-y-6">
           <p className="text-red-500 text-xl p-8">{error || 'Failed to load data.'}</p>
           <img
@@ -87,10 +91,8 @@ const Hero: React.FC = () => {
       id="hero"
       className="relative min-h-screen flex flex-col-reverse md:flex-row items-center justify-center gap-12 px-6 md:px-20 overflow-hidden"
     >
-      {/* Background overlay */}
       <div className="absolute inset-0 z-0" />
 
-      {/* Right Side: Text */}
       <motion.div
         className="relative z-10 space-y-6 max-w-xl text-center md:text-left"
         variants={zoomOutVariants}
