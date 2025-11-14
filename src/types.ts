@@ -61,7 +61,7 @@ export interface Project {
   imageUrl: string;
   liveUrl?: string;
   repoUrl?: string;
-  category?: string;
+  category: string;
 }
 
 

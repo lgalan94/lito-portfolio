@@ -6,8 +6,6 @@ import { getAllProjects } from '../services/projectApi';
 import type { Project } from '../types';
 import { ExternalLink, Github } from 'lucide-react';
 
-const categoryOptions = ['All', 'Fullstack', 'Frontend', 'Backend', 'Landing', 'UI/UX', 'Other'];
-
 const Projects: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -30,10 +28,27 @@ const Projects: React.FC = () => {
     fetchProjects();
   }, []);
 
+  // ✅ Get unique categories from projects
+  const categories = useMemo(() => {
+    const unique = Array.from(new Set(projects.map((p) => p.category)));
+    return ['All', ...unique];
+  }, [projects]);
+
   const filteredProjects = useMemo(() => {
-    if (activeCategory === 'All') return projects;
-    return projects.filter((project) => project.category === activeCategory);
-  }, [activeCategory, projects]);
+  let filtered = activeCategory === 'All'
+    ? [...projects]
+    : projects.filter((project) => project.category === activeCategory);
+
+  // Sort so Fullstack projects appear first
+  filtered.sort((a, b) => {
+    if (a.category === 'Fullstack' && b.category !== 'Fullstack') return -1;
+    if (b.category === 'Fullstack' && a.category !== 'Fullstack') return 1;
+    return 0; // keep relative order for others
+  });
+
+  return filtered;
+}, [activeCategory, projects]);
+
 
   const projectCardVariants: Variants = {
     hidden: { opacity: 0, scale: 0.8, y: 20 },
@@ -67,9 +82,9 @@ const Projects: React.FC = () => {
         </h2>
         <div className="w-24 h-1 bg-cyan-500 mx-auto mb-10 rounded-full"></div>
 
-        {/* ✅ Category Filter */}
+        {/* ✅ Dynamic Category Filter */}
         <div className="flex flex-wrap justify-center gap-2 mb-14" role="group" aria-label="Category filters">
-          {categoryOptions.map((category) => (
+          {categories.map((category) => (
             <button
               key={category}
               onClick={() => setActiveCategory(category)}
@@ -108,59 +123,59 @@ const Projects: React.FC = () => {
                     exit="exit"
                     layout
                   >
-                    <Card className="bg-slate-900 border border-slate-800 hover:border-cyan-500/50 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 rounded-xl overflow-hidden flex flex-col h-full group">
-                      {/* Image */}
-                      <div className="relative overflow-hidden">
+                    
+                    <Card className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 border border-slate-700 rounded-2xl overflow-hidden flex flex-col h-full shadow-lg hover:shadow-cyan-500/30 transition-all duration-500 group">
+                      {/* Image with overlay */}
+                      <div className="relative overflow-hidden rounded-t-2xl">
                         <img
                           src={project.imageUrl}
                           alt={project.title}
-                          className="w-full h-44 object-cover rounded-t-xl transition-transform duration-500 group-hover:scale-110"
+                          className="w-full h-52 sm:h-44 object-cover transition-transform duration-500 group-hover:scale-110"
                         />
-                        <span className="absolute top-3 left-3 bg-cyan-500/80 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur-md">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-t-2xl"></div>
+                        <span className="absolute top-3 left-3 bg-cyan-500/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur-md">
                           {project.category}
                         </span>
                       </div>
 
                       {/* Content */}
-                      <div className="p-5 flex flex-col flex-grow text-left">
-                        <h3 className="text-lg font-semibold text-white mb-2">
+                      <div className="p-6 flex flex-col flex-grow text-left">
+                        <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
                           {project.title}
                         </h3>
 
-                        {/* ✅ Expandable Description */}
+                        {/* Expandable Description */}
                         <motion.p
                           layout
-                          className={`text-slate-400 text-sm mb-2 ${
-                            isExpanded ? '' : 'line-clamp-3'
-                          }`}
+                          className={`text-slate-300 text-sm sm:text-base mb-3 ${isExpanded ? '' : 'line-clamp-3'}`}
                         >
                           {project.description}
                         </motion.p>
 
                         <button
                           onClick={() => toggleDescription(project._id!)}
-                          className="text-cyan-400 text-xs font-medium hover:underline self-start mb-4"
+                          className="text-cyan-400 text-xs sm:text-sm font-medium hover:underline self-start mb-4"
                         >
                           {isExpanded ? 'Show Less' : 'Show More'}
                         </button>
 
-                        {/* ✅ Tags */}
-                        <div className="flex flex-wrap gap-1.5 mb-5">
+                        {/* Tags */}
+                        <div className="flex flex-wrap gap-2 mb-5">
                           {project.tags.slice(0, 4).map((tag) => (
                             <SkillBadge key={tag}>{tag}</SkillBadge>
                           ))}
                         </div>
 
-                        {/* ✅ Buttons */}
-                        <div className="flex justify-between items-center mt-auto">
+                        {/* Buttons */}
+                        <div className="flex flex-col sm:flex-row justify-between items-center gap-3 mt-auto">
                           {project.liveUrl && (
                             <a
                               href={project.liveUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:from-cyan-400 hover:to-blue-400 transition-all"
+                              className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:from-cyan-400 hover:to-blue-400 transition-all w-full sm:w-auto"
                             >
-                              <ExternalLink size={14} />
+                              <ExternalLink size={16} />
                               Live
                             </a>
                           )}
@@ -169,15 +184,17 @@ const Projects: React.FC = () => {
                               href={project.repoUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-full bg-slate-800 text-slate-300 border border-slate-700 hover:border-cyan-500 hover:text-cyan-400 transition-all"
+                              className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-full bg-slate-800 text-slate-300 border border-slate-700 hover:border-cyan-500 hover:text-cyan-400 transition-all w-full sm:w-auto"
                             >
-                              <Github size={14} />
+                              <Github size={16} />
                               Source
                             </a>
                           )}
                         </div>
                       </div>
-                    </Card>
+</Card>
+
+
                   </motion.div>
                 );
               })
@@ -199,3 +216,4 @@ const Projects: React.FC = () => {
 };
 
 export default Projects;
+

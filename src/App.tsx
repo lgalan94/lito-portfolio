@@ -23,7 +23,7 @@ function App() {
       {/* ✅ Pass both props */}
       <Sidebar activeSection={activeSection} onNavLinkClick={handleNavLinkClick} />
 
-      <main className="p-6 lg:p-0">
+      <main>
         <Hero />
         <About />
         <Skills />
