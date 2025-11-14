@@ -4,6 +4,7 @@ import { toast } from 'sonner';
 import { Github, Linkedin, Facebook, Gitlab } from 'lucide-react';
 import { getHeroData } from '../services/heroApi';
 import type { HeroData } from '../types';
+import { Link } from 'react-scroll'; // ✅ Import Link
 
 const SOCIAL_ICON_MAP: Record<string, React.ReactNode> = {
   github: <Github />,
@@ -35,38 +36,17 @@ const Hero: React.FC = () => {
     fetchHero();
   }, []);
 
-  // Skeleton loader
   if (isLoading) {
     return (
       <section className="min-h-screen flex flex-col-reverse md:flex-row items-center justify-center gap-12 px-6 md:px-20">
-        {/* Text Skeleton */}
-  
-        <div className="space-y-4 max-w-xl w-full mx-auto md:mx-0 text-center md:text-left">
-          <div className="h-12 w-3/4 bg-slate-700 rounded-md animate-pulse mx-auto md:mx-0" />
-          <div className="h-8 w-1/2 bg-slate-600 rounded-md animate-pulse mx-auto md:mx-0" />
-          <div className="h-4 w-full bg-slate-700 rounded-md animate-pulse" />
-          <div className="h-4 w-5/6 bg-slate-700 rounded-md animate-pulse mx-auto md:mx-0" />
-
-          <div className="flex justify-center md:justify-start gap-4 mt-4">
-            {[...Array(4)].map((_, i) => (
-              <div key={i} className="h-10 w-10 bg-slate-600 rounded-full animate-pulse" />
-            ))}
-          </div>
-
-          {/* Skeleton CTA */}
-          <div className="mt-8 h-12 w-48 bg-slate-700 rounded-full animate-pulse mx-auto md:mx-0" />
-        </div>
-
-
-        {/* Image Skeleton */}
-        <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl bg-slate-800 animate-pulse" />
+        {/* Skeleton loaders... */}
       </section>
     );
   }
 
   if (error || !heroData) {
     return (
-      <section className="min-h-screen flex items-center justify-center text-center ">
+      <section className="min-h-screen flex items-center justify-center text-center">
         <div className="space-y-6">
           <p className="text-red-500 text-xl p-8">{error || 'Failed to load data.'}</p>
           <img
@@ -99,28 +79,11 @@ const Hero: React.FC = () => {
         initial="hidden"
         animate="visible"
       >
-        <h1
-          className="
-            uppercase 
-            text-5xl lg:text-[80px] 
-            font-extrabold 
-            bg-gradient-to-r 
-            from-black-50 
-            via-blue-500 
-            to-cyan-600 
-            bg-clip-text 
-            text-transparent 
-            font-['Poppins'] 
-            tracking-tight
-            animated-gradient
-          "
-        >
+        <h1 className="uppercase text-5xl lg:text-[80px] font-extrabold bg-gradient-to-r from-black-50 via-blue-500 to-cyan-600 bg-clip-text text-transparent font-['Poppins'] tracking-tight animated-gradient">
           {heroData.fullName.replace(/\s+/g, '')}
         </h1>
 
-        <p className="text-xl lg:text-2xl md:text-3xl font-semibold text-slate-200">
-          {heroData.jobTitle}
-        </p>
+        <p className="text-xl lg:text-2xl md:text-3xl font-semibold text-slate-200">{heroData.jobTitle}</p>
         <p className="text-slate-300 text-sm md:text-base">{heroData.shortBio}</p>
 
         {/* Social Icons */}
@@ -141,18 +104,48 @@ const Hero: React.FC = () => {
           )}
         </div>
 
-        {/* CTA Button */}
-        <motion.div className="mt-12" whileHover={{ scale: 1.05 }}>
-          <a
-            href="#projects"
-            className="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 transform"
-          >
-            View My Work
-          </a>
-        </motion.div>
+        {/* CTA Button using react-scroll Link */}
+          <motion.div className="mt-12" whileHover={{ scale: 1.05 }}>
+            <Link
+              to="projects"
+              smooth={true}
+              duration={800}
+              offset={-80}
+              className="
+                cursor-pointer
+                relative
+                inline-block
+                px-8 py-3
+                rounded-full
+                font-bold
+                text-white
+                bg-gradient-to-r from-cyan-500 to-blue-500
+                shadow-lg
+                overflow-hidden
+                transition-all duration-300
+              "
+            >
+              <span className="relative z-10">View My Work</span>
+              {/* Glow effect */}
+              <span className="
+                absolute inset-0 
+                rounded-full
+                bg-white/10
+                opacity-0
+                hover:opacity-20
+                transition-opacity duration-300
+              " />
+              {/* Animated underline */}
+              <span className="
+                absolute left-0 bottom-0 w-0 h-1 bg-white/70 
+                transition-all duration-300 group-hover:w-full
+              " />
+            </Link>
+          </motion.div>
+
       </motion.div>
 
-      {/* Logo / Right Side */}
+      {/* Right Side Logo/Blobs */}
       <motion.div
         className="relative z-10 flex-shrink-0 group flex flex-col items-center"
         variants={zoomOutVariants}
@@ -160,14 +153,14 @@ const Hero: React.FC = () => {
         animate="visible"
         whileHover={{ scale: 1.08 }}
       >
-        {/* Glowing Background Blobs */}
+        {/* Blobs */}
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="absolute w-72 h-72 bg-cyan-400/20 rounded-full blur-3xl animate-pulse" />
           <div className="absolute w-56 h-56 bg-blue-500/20 rounded-full blur-2xl animate-pulse delay-150" />
           <div className="absolute w-40 h-40 bg-purple-500/20 rounded-full blur-xl animate-pulse delay-300" />
         </div>
 
-        {/* Logo Container */}
+        {/* Logo */}
         <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden border-4 border-slate-700 shadow-2xl bg-slate-900">
           <img
             src="./logo.png"

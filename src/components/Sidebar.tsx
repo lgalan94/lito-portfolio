@@ -16,7 +16,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onNavLinkClick }) => {
         <Link
           to="hero"
           smooth={true}
-          duration={600}
+          duration={100}
           offset={-70}
           spy={true}
           onSetActive={() => onNavLinkClick("hero")}
