@@ -72,7 +72,7 @@ const Chatbot: React.FC = () => {
       {/* Floating Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 w-16 h-16 bg-cyan-500 rounded-full shadow-xl hover:scale-110 transition-transform animate-pulse flex items-center justify-center z-50"
+        className="fixed bottom-18 lg:bottom-6 right-6 w-12 lg:w-16 h-12 lg:h-16 bg-cyan-500 rounded-full shadow-xl hover:scale-110 flex items-center justify-center z-50"
         aria-label="Open Chatbot"
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-white" fill="currentColor" viewBox="0 0 24 24">
