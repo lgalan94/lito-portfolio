@@ -40,7 +40,7 @@ const Hero: React.FC = () => {
   if (isLoading) {
   return (
     <section className="min-h-screen flex items-center justify-center px-6 md:px-20">
-      <div className="flex flex-col md:flex-row items-center justify-center gap-12 w-full">
+      <div className="flex flex-col-reverse md:flex-row items-center justify-center gap-12 w-full">
 
         {/* Left Skeleton */}
         <div className="space-y-6 w-full max-w-xl animate-pulse text-center md:text-left">
