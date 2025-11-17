@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-/* import api from "../services/api"; */
+import api from "../services/api";
 
 const NewsletterCTA: React.FC = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
-  /* const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
 
@@ -22,14 +22,9 @@ const NewsletterCTA: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }; */
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    toast.success("Subscribed successfully!", { duration: 3000 });
-    setEmail("");
-    setLoading(false)
   };
+
+  
 
   return (
     <section

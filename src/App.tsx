@@ -11,6 +11,7 @@ import { Toaster } from "sonner";
 import Sidebar from "./components/Sidebar";
 import NewsletterCTA from "./components/NewsletterCTA";
 import Chatbot from "./components/Chatbot";
+/* import CaseStudySection from "./components/CaseStudy"; */
 
 function App() {
   const [activeSection, setActiveSection] = useState<string>("hero");
@@ -29,6 +30,7 @@ function App() {
         <About />
         <Skills />
         <Projects />
+        
         {/* <Experience /> */}
         <NewsletterCTA />
         <Contact />
