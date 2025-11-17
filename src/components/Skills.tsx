@@ -3,8 +3,6 @@ import { motion, type Variants } from 'framer-motion';
 import { getSkills, type SkillsResponse } from '../services/skillApi';
 import type { Skill } from '../types';
 
-const PREFERRED_ORDER = ['Frontend', 'Backend', 'Database', 'Tools', 'Other'];
-
 const Skills: React.FC = () => {
   const [skillsData, setSkillsData] = useState<SkillsResponse | null>(null);
   const [loading, setLoading] = useState(true);
@@ -26,12 +24,11 @@ const Skills: React.FC = () => {
   }, []);
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30, scale: 0.9 },
+    hidden: { opacity: 0, y: 25 },
     show: {
       opacity: 1,
       y: 0,
-      scale: 1,
-      transition: { type: 'spring', stiffness: 120, damping: 10 },
+      transition: { type: 'spring', stiffness: 120, damping: 14 },
     },
   };
 
@@ -39,11 +36,13 @@ const Skills: React.FC = () => {
   if (error) return <p className="text-center text-red-500">{error}</p>;
   if (!skillsData) return <p className="text-center text-red-500">No skills found.</p>;
 
-  // Dynamically sort categories
-  const dynamicCategoryOrder = [
-    ...PREFERRED_ORDER.filter(cat => skillsData[cat] && skillsData[cat].length > 0),
-    ...Object.keys(skillsData).filter(cat => !PREFERRED_ORDER.includes(cat) && skillsData[cat].length > 0),
-  ];
+  // Flatten all skills into one list with category included
+  const allSkills: (Skill & { category: string })[] = [];
+  Object.keys(skillsData).forEach(category => {
+    skillsData[category].forEach(skill => {
+      allSkills.push({ ...skill, category });
+    });
+  });
 
   return (
     <section id="skills" className="py-20 md:py-32 relative overflow-hidden">
@@ -63,48 +62,35 @@ const Skills: React.FC = () => {
         </motion.h2>
         <div className="w-24 h-1 bg-cyan-500 mx-auto mb-12 rounded-full"></div>
 
-        {/* Kanban-style Flex Layout (3 columns per row) */}
-        <div className="flex flex-wrap justify-center gap-8">
-          {dynamicCategoryOrder.map(category => {
-            const skills = skillsData[category] || [];
-            if (skills.length === 0) return null;
+        {/* Skills grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          {allSkills.map((skill, index) => (
+            <motion.div
+              key={skill.name + index}
+              variants={itemVariants}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.2 }}
+              whileHover={{ scale: 1.05 }}
+              className="relative bg-white/10 border border-slate-800 rounded-xl p-4 flex flex-col items-center 
+              justify-center text-center backdrop-blur-md hover:border-cyan-400/50 hover:shadow-[0_0_12px_rgba(6,182,212,0.3)]
+              transition-all duration-300"
+            >
+              {/* Category label (top-left) */}
+              <span className="absolute top-2 left-2 text-[10px] font-semibold px-2 py-1 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                {skill.category}
+              </span>
 
-            return (
-              <motion.div
-                key={category}
-                className="w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)] bg-white/5 backdrop-blur-sm border border-slate-800 rounded-2xl flex flex-col overflow-hidden"
-                variants={itemVariants}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.2 }}
-              >
-                {/* Column Header */}
-                <div className="p-4 border-b border-slate-800 bg-slate-900/40 text-left">
-                  <h3 className="text-lg font-semibold text-cyan-400">{category}</h3>
-                </div>
-
-                {/* Skills inside each category */}
-                <div className="flex flex-wrap justify-center gap-4 p-4">
-                  {skills.map((skill: Skill) => (
-                    <motion.div
-                      key={skill.name}
-                      className="bg-white/10 border border-slate-700 rounded-lg p-3 w-24 h-24 flex flex-col items-center justify-center text-center hover:border-cyan-500/50 hover:shadow-[0_0_10px_rgba(6,182,212,0.3)] transition-all duration-300"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      {skill.icon && (
-                        <img
-                          src={skill.icon as string}
-                          alt={skill.name}
-                          className="w-10 h-10 object-contain mb-2 drop-shadow-[0_0_6px_rgba(6,182,212,0.4)]"
-                        />
-                      )}
-                      <span className="text-xs font-medium text-slate-200">{skill.name}</span>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            );
-          })}
+              {skill.icon && (
+                <img
+                  src={skill.icon as string}
+                  alt={skill.name}
+                  className="w-12 h-12 object-contain mb-3 drop-shadow-[0_0_8px_rgba(6,182,212,0.4)]"
+                />
+              )}
+              <span className="text-sm font-medium text-slate-200">{skill.name}</span>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>
@@ -112,4 +98,3 @@ const Skills: React.FC = () => {
 };
 
 export default Skills;
-``
