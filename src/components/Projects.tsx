@@ -161,7 +161,7 @@ const Projects: React.FC = () => {
 
                         {/* Tags */}
                         <div className="flex flex-wrap gap-2 mb-5">
-                          {project.tags.slice(0, 4).map((tag) => (
+                          {project.tags.map((tag) => (
                             <SkillBadge key={tag}>{tag}</SkillBadge>
                           ))}
                         </div>
