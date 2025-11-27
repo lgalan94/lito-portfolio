@@ -59,9 +59,7 @@ const About: React.FC = () => {
   return (
     <section id="about" className="relative py-6 lg:py-24 overflow-hidden">
 
-      {/* Decorative glowing blobs */}
-      <div className="absolute top-10 -left-10 w-72 h-72 bg-cyan-500/20 rounded-full blur-[130px]" />
-      <div className="absolute bottom-0 -right-10 w-80 h-80 bg-blue-600/20 rounded-full blur-[130px]" />
+     
 
       <motion.div
         className="relative max-w-6xl mx-auto px-6"
@@ -72,11 +70,18 @@ const About: React.FC = () => {
       >
         <div className="backdrop-blur-xl bg-white/5 border border-white/10 shadow-xl rounded-3xl p-10 md:p-14">
 
-          {/* Title */}
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white text-center tracking-wide">
+        <motion.h2
+          className="text-4xl md:text-5xl font-black text-white tracking-tight mb-4 text-center"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
             About Me
-          </h2>
-          <div className="w-28 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto mt-4 mb-12 rounded-full" />
+          </span>
+        </motion.h2>
+
+        <div className="w-28 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto mt-4 mb-12 rounded-full" />
 
           {/* Content Layout */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -120,26 +125,12 @@ const About: React.FC = () => {
                 onClick={handleDownloadResume}
                 variants={buttonVariants}
                 whileHover="hover"
-                whileTap="tap"
-                className="mt-8                 
-                  inline-flex
-                  items-center
-                  gap-2
-                  px-8
-                  py-3
-                  bg-gradient-to-r from-cyan-500 to-blue-600
-                  text-white
-                  font-semibold
-                  rounded-xl
-                  shadow-lg
-                  hover:opacity-90
-                  transition-all
-                  duration-300
-                  disabled:opacity-50
-                "
+                whileTap="tap"   
+                className="mt-6 px-4 lg:px-8 py-2 lg:py-4 border border-white/20 text-white font-bold rounded-lg hover:bg-white/5 transition-all flex items-center justify-center gap-2 group"
                 disabled={isDownloading}
               >
-                <Download className="w-3 lg:w-5 h-3 lg:h-5" />
+                <Download 
+                  className="group-hover:translate-y-1 transition-transform" />
                 {isDownloading ? "Downloading..." : "Download Resume"}
               </motion.button>
             )}

@@ -77,10 +77,19 @@ const Projects: React.FC = () => {
   return (
     <section id="projects" className="py-20 md:py-32">
       <div className="max-w-7xl mx-auto px-4 text-center">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-          🚀 Featured Projects
-        </h2>
-        <div className="w-24 h-1 bg-cyan-500 mx-auto mb-10 rounded-full"></div>
+        
+        <motion.h2
+          className="text-4xl md:text-5xl font-black text-white tracking-tight mb-4 text-center"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            Featured Projects
+          </span>
+        </motion.h2>
+
+        <div className="w-28 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto mt-4 mb-12 rounded-full" />
 
         {/* ✅ Dynamic Category Filter */}
         <div className="flex flex-wrap justify-center gap-2 mb-14" role="group" aria-label="Category filters">

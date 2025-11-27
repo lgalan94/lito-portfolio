@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { motion, type Variants } from 'framer-motion';
-import { getSkills, type SkillsResponse } from '../services/skillApi';
-import type { Skill } from '../types';
+import React, { useEffect, useState } from "react";
+import { motion, type Variants } from "framer-motion";
+import { getSkills, type SkillsResponse } from "../services/skillApi";
+import type { Skill } from "../types";
 
 const Skills: React.FC = () => {
   const [skillsData, setSkillsData] = useState<SkillsResponse | null>(null);
@@ -16,8 +16,7 @@ const Skills: React.FC = () => {
         const data = await getSkills();
         setSkillsData(data);
       } catch (err) {
-        console.error(err);
-        setError('Failed to load skills.');
+        setError("Failed to load skills.");
       } finally {
         setLoading(false);
       }
@@ -26,51 +25,63 @@ const Skills: React.FC = () => {
   }, []);
 
   const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 25 },
+    hidden: { opacity: 0, y: 20 },
     show: {
       opacity: 1,
       y: 0,
-      transition: { type: 'spring', stiffness: 120, damping: 14 },
+      transition: { type: "spring", stiffness: 140, damping: 12 },
     },
   };
 
-  if (loading) return <p className="text-center text-white">Loading skills...</p>;
-  if (error) return <p className="text-center text-red-500">{error}</p>;
-  if (!skillsData) return <p className="text-center text-red-500">No skills found.</p>;
+  if (loading) return <p className="text-center text-slate-300">Loading...</p>;
+  if (error) return <p className="text-center text-red-400">{error}</p>;
+  if (!skillsData) return <p className="text-center text-red-400">No skills found.</p>;
 
-  // Flatten all skills for Grid View
   const allSkills: (Skill & { category: string })[] = [];
-  Object.keys(skillsData).forEach(category => {
-    skillsData[category].forEach(skill => {
+  Object.keys(skillsData).forEach((category) => {
+    skillsData[category].forEach((skill) => {
       allSkills.push({ ...skill, category });
     });
   });
 
   return (
-    <section id="skills" className="py-20 md:py-32 relative overflow-hidden">
-      {/* background glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_40%,rgba(34,211,238,0.08),transparent_70%)]"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_60%,rgba(6,182,212,0.08),transparent_70%)]"></div>
+    <section id="skills" className="relative py-24 md:py-32 overflow-hidden">
+      
 
-      <div className="relative max-w-7xl mx-auto text-center px-6">
+      <div className="relative max-w-7xl mx-auto px-2 text-center">
+        
+        {/* Header */}
         <motion.h2
-          className="text-3xl md:text-4xl font-bold text-white mb-4"
+          className="text-4xl md:text-5xl font-black text-white tracking-tight mb-4"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
         >
-          🧠 My Tech Stack
+          <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            My Tech Stack
+          </span>
         </motion.h2>
-        <div className="w-24 h-1 bg-cyan-500 mx-auto mb-8 rounded-full"></div>
+        <div className="w-28 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto mt-4 mb-12 rounded-full" />
 
-        {/* View Toggle Button */}
-        <div className="mb-12 flex justify-center">
+        <p className="text-slate-400 max-w-xl mx-auto mb-12">
+          Tools, technologies & frameworks I use to build modern, scalable applications.
+        </p>
+
+        {/* Toggle Switch */}
+        <div className="flex justify-center mb-12">
           <button
             onClick={() => setViewMode(viewMode === "grid" ? "kanban" : "grid")}
-            className="px-6 py-2 bg-cyan-600 hover:bg-cyan-500 transition text-white font-semibold rounded-xl shadow-lg"
+            className="relative inline-flex items-center h-10 px-5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-slate-200 hover:border-cyan-400/40 transition-all duration-300"
           >
-            {viewMode === "grid" ? "Switch to Kanban View" : "Switch to Grid View"}
+            <span className="mr-3 text-sm">{viewMode === "grid" ? "Grid" : "Kanban"}</span>
+            <div className="relative">
+              <div className="w-12 h-6 bg-slate-700/50 rounded-full"></div>
+              <motion.div
+                layout
+                className="absolute top-0 w-6 h-6 bg-cyan-400 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.7)]"
+                animate={{ x: viewMode === "grid" ? 0 : 24 }}
+              />
+            </div>
           </button>
         </div>
 
@@ -83,13 +94,12 @@ const Skills: React.FC = () => {
                 variants={itemVariants}
                 initial="hidden"
                 whileInView="show"
-                viewport={{ once: true, amount: 0.2 }}
-                whileHover={{ scale: 1.05 }}
-                className="relative bg-white/10 border border-slate-800 rounded-xl p-4 flex flex-col items-center 
-                justify-center text-center backdrop-blur-md hover:border-cyan-400/50 hover:shadow-[0_0_12px_rgba(6,182,212,0.3)]
-                transition-all duration-300"
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.06 }}
+                className="relative p-5 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10
+                  hover:border-cyan-400/30 hover:shadow-[0_0_18px_rgba(34,211,238,0.25)] transition-all"
               >
-                <span className="absolute top-2 left-2 text-[10px] font-semibold px-2 py-1 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                <span className="absolute top-2 left-2 text-[10px] px-2 py-1 rounded-md bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
                   {skill.category}
                 </span>
 
@@ -97,10 +107,10 @@ const Skills: React.FC = () => {
                   <img
                     src={skill.icon as string}
                     alt={skill.name}
-                    className="w-12 h-12 object-contain mb-3 drop-shadow-[0_0_8px_rgba(6,182,212,0.4)]"
+                    className="w-14 h-14 object-contain mx-auto mb-3 drop-shadow-[0_0_12px_rgba(34,211,238,0.5)]"
                   />
                 )}
-                <span className="text-sm font-medium text-slate-200">{skill.name}</span>
+                <p className="text-sm text-white font-medium">{skill.name}</p>
               </motion.div>
             ))}
           </div>
@@ -108,32 +118,35 @@ const Skills: React.FC = () => {
 
         {/* KANBAN VIEW */}
         {viewMode === "kanban" && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-6">
-            {Object.keys(skillsData).map(category => (
-              <div key={category} className="bg-white/5 border border-slate-800 rounded-2xl p-4 backdrop-blur-md">
-                <h3 className="text-left text-cyan-400 text-lg font-semibold mb-4">{category}</h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+            {Object.keys(skillsData).map((category) => (
+              <div
+                key={category}
+                className="p-6 rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 shadow-xl"
+              >
+                <h3 className="text-left text-cyan-400 text-lg font-semibold mb-4">
+                  {category}
+                </h3>
 
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-wrap gap-4 justify-center">
                   {skillsData[category].map((skill, index) => (
                     <motion.div
                       key={skill.name + index}
                       variants={itemVariants}
                       initial="hidden"
                       whileInView="show"
-                      viewport={{ once: true, amount: 0.2 }}
+                      viewport={{ once: true }}
                       whileHover={{ scale: 1.05 }}
-                      className="bg-white/10 border border-slate-700 rounded-xl p-3 w-24 h-24 
-                      flex flex-col items-center justify-center text-center hover:border-cyan-400/40
-                      transition-all duration-300"
+                      className="bg-white/10 rounded-xl w-20 h-20 flex flex-col items-center justify-center border border-white/10 hover:border-cyan-400/40 transition-all"
                     >
                       {skill.icon && (
                         <img
                           src={skill.icon as string}
                           alt={skill.name}
-                          className="w-10 h-10 object-contain mb-2"
+                          className="w-9 h-9 mb-1"
                         />
                       )}
-                      <span className="text-xs font-medium text-slate-200">{skill.name}</span>
+                      <p className="text-xs text-white/90">{skill.name}</p>
                     </motion.div>
                   ))}
                 </div>
