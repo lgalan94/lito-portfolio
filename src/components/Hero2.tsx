@@ -58,15 +58,20 @@ const Hero2: React.FC = () => {
  if (isLoading) {
   return (
     <section className="min-h-screen flex items-center px-6 pt-20">
-      <div className="container mx-auto grid md:grid-cols-2 gap-16 items-center">
-
+      <div className="
+        container mx-auto 
+        grid md:grid-cols-2 
+        gap-16 items-center
+        text-center md:text-left
+      ">
+        
         {/* LEFT SIDE */}
-        <div className="space-y-6 animate-pulse">
+        <div className="space-y-6 animate-pulse flex flex-col items-center md:items-start">
 
-          {/* Availability badge */}
+          {/* Availability Badge */}
           <div className="h-6 w-40 bg-white/10 rounded-full"></div>
 
-          {/* Title lines */}
+          {/* Title Lines */}
           <div className="h-10 w-3/4 bg-white/10 rounded"></div>
           <div className="h-10 w-2/3 bg-white/10 rounded"></div>
 
@@ -75,30 +80,34 @@ const Hero2: React.FC = () => {
           <div className="h-4 w-5/6 bg-white/10 rounded"></div>
 
           {/* Buttons */}
-          <div className="flex gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row gap-4 mb-10">
+            <div className="h-12 w-40 bg-white/10 rounded-lg"></div>
             <div className="h-12 w-40 bg-white/10 rounded-lg"></div>
           </div>
 
           {/* Socials */}
-          <div className="flex gap-4 pt-4">
+          <div className="flex gap-4 pt-4 justify-center md:justify-start">
             <div className="h-10 w-10 bg-white/10 rounded-full"></div>
             <div className="h-10 w-10 bg-white/10 rounded-full"></div>
             <div className="h-10 w-10 bg-white/10 rounded-full"></div>
             <div className="h-10 w-10 bg-white/10 rounded-full"></div>
           </div>
+
         </div>
 
-        {/* RIGHT SIDE (Profile / Code Card Skeleton) */}
-        <div className="flex justify-center md:justify-end">
-          <div className="relative w-72 h-80 bg-white/10 rounded-2xl animate-pulse">
-            {/* Toolbar skeleton */}
-            <div className="absolute top-0 left-0 right-0 h-12 border-b border-white/10 flex items-center gap-2 px-4">
+        {/* RIGHT SIDE */}
+        <div className="sm:flex hidden justify-center md:justify-end w-full">
+          <div className="relative w-64 sm:w-72 h-72 sm:h-80 bg-white/10 rounded-2xl animate-pulse">
+
+            {/* Toolbar */}
+            <div className="absolute top-0 left-0 right-0 h-12 border-b border-white/10 
+              flex items-center gap-2 px-4">
               <div className="w-3 h-3 bg-white/20 rounded-full"></div>
               <div className="w-3 h-3 bg-white/20 rounded-full"></div>
               <div className="w-3 h-3 bg-white/20 rounded-full"></div>
             </div>
 
-            {/* Code lines */}
+            {/* Code Lines */}
             <div className="mt-16 space-y-3 px-6">
               <div className="h-4 w-3/4 bg-white/10 rounded"></div>
               <div className="h-4 w-2/3 bg-white/10 rounded"></div>
@@ -113,6 +122,7 @@ const Hero2: React.FC = () => {
     </section>
   );
 }
+
 
 
   // -----------------------
@@ -156,20 +166,22 @@ const Hero2: React.FC = () => {
           animate="visible"
           transition={{ duration: 0.6 }}
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-6">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-            <span className="text-xs font-medium text-gray-300 uppercase tracking-wider">
-              {/* {heroData.isAvailable ? "Available for new projects" : "Currently Busy"} */}
-              Available for new projects
-            </span>
+          <div className="flex justify-center md:justify-start">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-6">
+              <span className="text-center w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+              <span className="text-xs font-medium text-gray-300 uppercase tracking-wider">
+                Available for new projects
+              </span>
+            </div>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold font-display leading-tight mb-6">
+
+          <h1 className="text-5xl md:text-7xl font-bold font-display text-center md:text-start leading-tight mb-6">
             Hi, I'm <span className="text-cyan-500 animated-gradient">{heroData.fullName.toUpperCase()}</span>.<br />
             {heroData.jobTitle}.
           </h1>
 
-          <p className="text-lg text-muted mb-8 max-w-lg leading-relaxed">
+          <p className="text-center md:text-start text-lg text-muted mb-8 max-w-lg leading-relaxed">
             {heroData.shortBio}
           </p>
 
@@ -180,7 +192,7 @@ const Hero2: React.FC = () => {
               smooth={true}
               duration={500}
               offset={-50}
-              className="px-8 py-4 bg-primary text-background font-bold rounded-lg hover:bg-white/5 transition-all transform hover:scale-105 flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(0,229,255,0.4)]"
+              className="px-4 lg:px-8 py-2 lg:py-4 bg-primary text-background font-bold rounded-lg hover:bg-white/5 transition-all transform hover:scale-105 flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(0,229,255,0.4)]"
             >
               View Work <ArrowRight size={20} />
             </Link>
@@ -190,14 +202,14 @@ const Hero2: React.FC = () => {
               smooth={true}
               duration={500}
               offset={-50}
-              className="px-8 py-4 border border-white/20 text-white font-bold rounded-lg hover:bg-white/5 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="px-4 lg:px-8 py-2 lg:py-4 border border-white/20 text-white font-bold rounded-lg hover:bg-white/5 transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
              Hire Me
             </Link>
           </div>
 
           {/* DYNAMIC SOCIAL ICONS */}
-          <div className="flex items-center gap-6 text-muted">
+          <div className="flex justify-center md:justify-start gap-6 text-muted">
                 {socialLinks.map(([key, url]) => url ? (
                 <motion.a
                     key={key}
@@ -300,7 +312,7 @@ const Hero2: React.FC = () => {
 
       {/* SCROLL INDICATOR */}
       <motion.div
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-gray-500"
+        className="sm:flex hidden absolute bottom-10 left-1/2 -translate-x-1/2 text-gray-500"
         animate={{ y: [0, 10, 0] }}
         transition={{ repeat: Infinity, duration: 2 }}
       >
