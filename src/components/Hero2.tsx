@@ -3,7 +3,7 @@ import { motion, type Variants } from "framer-motion";
 import { Link } from "react-scroll";
 import { toast } from "sonner";
 
-import { ArrowRight, Download, Github, Linkedin, Twitter, Facebook, Gitlab } from "lucide-react";
+import { ArrowRight, Github, Linkedin, Twitter, Facebook, Gitlab } from "lucide-react";
 import { getHeroData } from "../services/heroApi";
 import type { HeroData } from "../types";
 
