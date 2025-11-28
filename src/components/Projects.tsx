@@ -28,27 +28,25 @@ const Projects: React.FC = () => {
     fetchProjects();
   }, []);
 
-  // ✅ Get unique categories from projects
   const categories = useMemo(() => {
     const unique = Array.from(new Set(projects.map((p) => p.category)));
     return ['All', ...unique];
   }, [projects]);
 
   const filteredProjects = useMemo(() => {
-  let filtered = activeCategory === 'All'
-    ? [...projects]
-    : projects.filter((project) => project.category === activeCategory);
+    let filtered =
+      activeCategory === 'All'
+        ? [...projects]
+        : projects.filter((project) => project.category === activeCategory);
 
-  // Sort so Fullstack projects appear first
-  filtered.sort((a, b) => {
-    if (a.category === 'Fullstack' && b.category !== 'Fullstack') return -1;
-    if (b.category === 'Fullstack' && a.category !== 'Fullstack') return 1;
-    return 0; // keep relative order for others
-  });
+    filtered.sort((a, b) => {
+      if (a.category === 'Fullstack' && b.category !== 'Fullstack') return -1;
+      if (b.category === 'Fullstack' && a.category !== 'Fullstack') return 1;
+      return 0;
+    });
 
-  return filtered;
-}, [activeCategory, projects]);
-
+    return filtered;
+  }, [activeCategory, projects]);
 
   const projectCardVariants: Variants = {
     hidden: { opacity: 0, scale: 0.8, y: 20 },
@@ -70,14 +68,76 @@ const Projects: React.FC = () => {
     setExpandedProjectId((prev) => (prev === id ? null : id));
   };
 
-  if (loading) return <p className="text-center text-white">Loading projects...</p>;
+  // -------------------------
+  // ⭐ SKELETON LOADER HERE ⭐
+  // -------------------------
+  const SkeletonCard = () => (
+    <div className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 border border-slate-700 rounded-2xl overflow-hidden shadow-lg animate-pulse">
+      {/* Image skeleton */}
+      <div className="w-full h-52 sm:h-44 bg-slate-700/40"></div>
+
+      {/* Category Badge */}
+      <div className="absolute top-4 left-4 w-20 h-6 bg-slate-700/50 rounded-full"></div>
+
+      <div className="p-6 space-y-4">
+        {/* Title */}
+        <div className="h-5 w-2/3 bg-slate-700/40 rounded"></div>
+
+        {/* Description (3 lines) */}
+        <div className="space-y-2">
+          <div className="h-3 w-full bg-slate-700/40 rounded"></div>
+          <div className="h-3 w-4/5 bg-slate-700/40 rounded"></div>
+          <div className="h-3 w-3/5 bg-slate-700/40 rounded"></div>
+        </div>
+
+        {/* Tags */}
+        <div className="flex flex-wrap gap-2 mt-4">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="h-6 w-16 bg-slate-700/40 rounded-full"></div>
+          ))}
+        </div>
+
+        {/* Buttons */}
+        <div className="flex gap-3 mt-5">
+          <div className="h-10 w-24 bg-slate-700/40 rounded-full"></div>
+          <div className="h-10 w-24 bg-slate-700/40 rounded-full"></div>
+        </div>
+      </div>
+    </div>
+  );
+
+  if (loading)
+    return (
+      <section id="projects" className="py-20 md:py-32">
+        <motion.h2
+          className="text-4xl md:text-5xl font-black text-white tracking-tight mb-4 text-center"
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            Featured Projects
+          </span>
+        </motion.h2>
+
+        <div className="w-28 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto mt-4 mb-12 rounded-full" />
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <SkeletonCard key={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+
   if (error) return <p className="text-center text-red-500">{error}</p>;
   if (!projects.length) return <p className="text-center text-white">No projects found.</p>;
 
   return (
     <section id="projects" className="py-20 md:py-32">
       <div className="max-w-7xl mx-auto px-4 text-center">
-        
+
         <motion.h2
           className="text-4xl md:text-5xl font-black text-white tracking-tight mb-4 text-center"
           initial={{ opacity: 0, y: -20 }}
@@ -91,7 +151,7 @@ const Projects: React.FC = () => {
 
         <div className="w-28 h-1 bg-gradient-to-r from-cyan-400 to-blue-500 mx-auto mt-4 mb-12 rounded-full" />
 
-        {/* ✅ Dynamic Category Filter */}
+        {/* CATEGORY FILTER */}
         <div className="flex flex-wrap justify-center gap-2 mb-14" role="group" aria-label="Category filters">
           {categories.map((category) => (
             <button
@@ -109,7 +169,7 @@ const Projects: React.FC = () => {
           ))}
         </div>
 
-        {/* ✅ Projects Grid */}
+        {/* PROJECT GRID */}
         <motion.div
           layout
           key={activeCategory}
@@ -119,104 +179,92 @@ const Projects: React.FC = () => {
           animate="visible"
         >
           <AnimatePresence>
-            {filteredProjects.length > 0 ? (
-              filteredProjects.map((project) => {
-                const isExpanded = expandedProjectId === project._id;
+            {filteredProjects.map((project) => {
+              const isExpanded = expandedProjectId === project._id;
 
-                return (
-                  <motion.div
-                    key={project._id}
-                    variants={projectCardVariants}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    layout
-                  >
-                    
-                    <Card className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 border border-slate-700 rounded-2xl overflow-hidden flex flex-col h-full shadow-lg hover:shadow-cyan-500/30 transition-all duration-500 group">
-                      {/* Image with overlay */}
-                      <div className="relative overflow-hidden rounded-t-2xl">
-                        <img
-                          src={project.imageUrl}
-                          alt={project.title}
-                          className="w-full h-52 sm:h-44 object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-t-2xl"></div>
-                        <span className="absolute top-3 left-3 bg-cyan-500/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur-md">
-                          {project.category}
-                        </span>
+              return (
+                <motion.div
+                  key={project._id}
+                  variants={projectCardVariants}
+                  initial="hidden"
+                  animate="visible"
+                  exit="exit"
+                  layout
+                >
+                  <Card className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 border border-slate-700 rounded-2xl overflow-hidden flex flex-col h-full shadow-lg hover:shadow-cyan-500/30 transition-all duration-500 group">
+
+                    {/* IMAGE */}
+                    <div className="relative overflow-hidden rounded-t-2xl">
+                      <img
+                        src={project.imageUrl}
+                        alt={project.title}
+                        className="w-full h-52 sm:h-44 object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-t-2xl"></div>
+                      <span className="absolute top-3 left-3 bg-cyan-500/90 text-white text-xs font-semibold px-3 py-1 rounded-full backdrop-blur-md">
+                        {project.category}
+                      </span>
+                    </div>
+
+                    {/* CONTENT */}
+                    <div className="p-6 flex flex-col flex-grow text-left">
+                      <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
+                        {project.title}
+                      </h3>
+
+                      <motion.p
+                        layout
+                        className={`text-slate-300 text-sm sm:text-base mb-3 ${
+                          isExpanded ? '' : 'line-clamp-3'
+                        }`}
+                      >
+                        {project.description}
+                      </motion.p>
+
+                      <button
+                        onClick={() => toggleDescription(project._id!)}
+                        className="text-cyan-400 text-xs sm:text-sm font-medium hover:underline self-start mb-4"
+                      >
+                        {isExpanded ? 'Show Less' : 'Show More'}
+                      </button>
+
+                      {/* Tags */}
+                      <div className="flex flex-wrap gap-2 mb-5">
+                        {project.tags.map((tag) => (
+                          <SkillBadge key={tag}>{tag}</SkillBadge>
+                        ))}
                       </div>
 
-                      {/* Content */}
-                      <div className="p-6 flex flex-col flex-grow text-left">
-                        <h3 className="text-lg sm:text-xl font-bold text-white mb-2">
-                          {project.title}
-                        </h3>
-
-                        {/* Expandable Description */}
-                        <motion.p
-                          layout
-                          className={`text-slate-300 text-sm sm:text-base mb-3 ${isExpanded ? '' : 'line-clamp-3'}`}
-                        >
-                          {project.description}
-                        </motion.p>
-
-                        <button
-                          onClick={() => toggleDescription(project._id!)}
-                          className="text-cyan-400 text-xs sm:text-sm font-medium hover:underline self-start mb-4"
-                        >
-                          {isExpanded ? 'Show Less' : 'Show More'}
-                        </button>
-
-                        {/* Tags */}
-                        <div className="flex flex-wrap gap-2 mb-5">
-                          {project.tags.map((tag) => (
-                            <SkillBadge key={tag}>{tag}</SkillBadge>
-                          ))}
-                        </div>
-
-                        {/* Buttons */}
-                        <div className="flex flex-col sm:flex-row justify-between items-center gap-3 mt-auto">
-                          {project.liveUrl && (
-                            <a
-                              href={project.liveUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:from-cyan-400 hover:to-blue-400 transition-all w-full sm:w-auto"
-                            >
-                              <ExternalLink size={16} />
-                              Live
-                            </a>
-                          )}
-                          {project.repoUrl && (
-                            <a
-                              href={project.repoUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-full bg-slate-800 text-slate-300 border border-slate-700 hover:border-cyan-500 hover:text-cyan-400 transition-all w-full sm:w-auto"
-                            >
-                              <Github size={16} />
-                              Source
-                            </a>
-                          )}
-                        </div>
+                      {/* ACTION BUTTONS */}
+                      <div className="flex flex-col sm:flex-row justify-between items-center gap-3 mt-auto">
+                        {project.liveUrl && (
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:from-cyan-400 hover:to-blue-400 transition-all w-full sm:w-auto"
+                          >
+                            <ExternalLink size={16} />
+                            Live
+                          </a>
+                        )}
+                        {project.repoUrl && (
+                          <a
+                            href={project.repoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-full bg-slate-800 text-slate-300 border border-slate-700 hover:border-cyan-500 hover:text-cyan-400 transition-all w-full sm:w-auto"
+                          >
+                            <Github size={16} />
+                            Source
+                          </a>
+                        )}
                       </div>
-</Card>
-
-
-                  </motion.div>
-                );
-              })
-            ) : (
-              <motion.p
-                key="no-category-projects"
-                className="text-center text-slate-400 col-span-full py-10"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-              >
-                No project in this category.
-              </motion.p>
-            )}
+                    </div>
+                  </Card>
+                </motion.div>
+              );
+            })}
           </AnimatePresence>
         </motion.div>
       </div>
@@ -225,4 +273,3 @@ const Projects: React.FC = () => {
 };
 
 export default Projects;
-

@@ -84,7 +84,7 @@ const Contact: React.FC = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
-          className="grid md:grid-cols-2 gap-12 items-center"
+          className="grid lg:grid-cols-2 gap-12 items-center"
         >
           {/* ✉️ Left Side: Intro + Dynamic Social Links */}
           <motion.div variants={itemVariants} className="text-center md:text-left space-y-6">

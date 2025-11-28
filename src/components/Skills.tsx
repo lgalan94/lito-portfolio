@@ -33,7 +33,41 @@ const Skills: React.FC = () => {
     },
   };
 
-  if (loading) return <p className="text-center text-slate-300">Loading...</p>;
+  /** Skeleton Component */
+  const Skeleton = ({ className = "" }) => (
+    <div
+      className={`animate-pulse bg-white/10 rounded-lg overflow-hidden relative ${className}`}
+    >
+      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shimmer_1.5s_infinite]"></div>
+    </div>
+  );
+
+  /** FULL PAGE SKELETON */
+  if (loading) {
+    return (
+      <section id="skills" className="relative py-24 md:py-32 overflow-hidden">
+        <div className="relative max-w-7xl mx-auto px-2 text-center">
+          
+          <Skeleton className="h-10 w-64 mx-auto mb-6 rounded-full" />
+          <Skeleton className="h-1 w-28 mx-auto mb-10 rounded-full" />
+          <Skeleton className="h-5 w-96 mx-auto mb-16 rounded-full" />
+
+          {/* Toggle */}
+          <div className="flex justify-center mb-12">
+            <Skeleton className="w-40 h-10 rounded-full" />
+          </div>
+
+          {/* Skeleton Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            {Array.from({ length: 10 }).map((_, i) => (
+              <Skeleton key={i} className="h-32 rounded-2xl" />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   if (error) return <p className="text-center text-red-400">{error}</p>;
   if (!skillsData) return <p className="text-center text-red-400">No skills found.</p>;
 
@@ -45,8 +79,7 @@ const Skills: React.FC = () => {
   });
 
   return (
-    <section id="skills" className="relative py-24 md:py-32 overflow-hidden">
-      
+    <section id="skills" className="relative py-24 md:py-32 overflow-hidden px-6">
 
       <div className="relative max-w-7xl mx-auto px-2 text-center">
         
@@ -87,7 +120,7 @@ const Skills: React.FC = () => {
 
         {/* GRID VIEW */}
         {viewMode === "grid" && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
             {allSkills.map((skill, index) => (
               <motion.div
                 key={skill.name + index}
@@ -118,7 +151,7 @@ const Skills: React.FC = () => {
 
         {/* KANBAN VIEW */}
         {viewMode === "kanban" && (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
             {Object.keys(skillsData).map((category) => (
               <div
                 key={category}
@@ -154,6 +187,7 @@ const Skills: React.FC = () => {
             ))}
           </div>
         )}
+
       </div>
     </section>
   );

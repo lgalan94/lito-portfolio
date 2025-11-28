@@ -38,7 +38,7 @@ const Footer: React.FC = () => {
   if (isLoading) {
     return (
       <footer className="bg-slate-950 py-10 text-center text-slate-500 border-t border-slate-800">
-        <p>Loading footer...</p>
+        <p className="animate-pulse text-7xl">...</p>
       </footer>
     );
   }
@@ -106,7 +106,7 @@ const Footer: React.FC = () => {
           <p>
             © {new Date().getFullYear()}{" "}
             <span className="text-cyan-400 font-medium">
-              {heroData.fullName || "Your Name"}
+              {heroData.fullName || "LMGJ"}
             </span>
             . All rights reserved.
           </p>

@@ -145,7 +145,13 @@ const Hero2: React.FC = () => {
   }
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <section
+      id="hero"
+      className="
+        relative min-h-screen flex items-center pt-20 overflow-hidden
+        md:pl-1 lg:pl-22"
+    >
+
    
       {/* BACKGROUND BLOBS */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
@@ -158,7 +164,7 @@ const Hero2: React.FC = () => {
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
       </div>
 
-      <div className="container mx-auto px-6 relative z-10 grid md:grid-cols-2 gap-12 items-center">
+      <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
 
         {/* LEFT CONTENT — NOW DYNAMIC */}
         <motion.div
@@ -233,7 +239,7 @@ const Hero2: React.FC = () => {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative hidden md:block"
+          className="relative hidden lg:block"
         >
           <div className="relative z-10 glass-card rounded-2xl p-6 transform rotate-2 hover:rotate-0 transition-all duration-500">
             

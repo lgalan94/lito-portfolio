@@ -11,7 +11,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onNavLinkClick }) => {
   return (
     <>
       {/* ===== Desktop Sidebar ===== */}
-      <aside className="hidden md:flex flex-col items-center w-20 lg:w-24 bg-slate-900 fixed top-0 left-0 h-full py-8 border-r border-slate-800/50 z-40">
+      <aside className="hidden lg:flex flex-col items-center w-20 lg:w-24 bg-slate-900 fixed top-0 left-0 h-full py-8 border-r border-slate-800/50 z-40">
   
   {/* Logo at the top */}
   <Link
@@ -66,7 +66,7 @@ const Sidebar: React.FC<SidebarProps> = ({ activeSection, onNavLinkClick }) => {
 
 
       {/* ===== Mobile Bottom Bar ===== */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-slate-900/80 backdrop-blur-md z-50 border-t border-slate-800">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 bg-slate-900/80 backdrop-blur-md z-50 border-t border-slate-800">
         <ul className="flex justify-around items-center h-16">
           {navLinks.map((link) => (
             <li key={link.id}>
