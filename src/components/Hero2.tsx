@@ -96,8 +96,8 @@ const Hero2: React.FC = () => {
         </div>
 
         {/* RIGHT SIDE */}
-        <div className="sm:flex hidden justify-center md:justify-end w-full">
-          <div className="relative w-64 sm:w-72 h-72 sm:h-80 bg-white/10 rounded-2xl animate-pulse">
+        <div className="sm:flex hidden justify-center w-full rotate-2 hover:rotate-0">
+          <div className="relative w-[600px] h-72 bg-white/10 rounded-2xl animate-pulse">
 
             {/* Toolbar */}
             <div className="absolute top-0 left-0 right-0 h-12 border-b border-white/10 
@@ -108,6 +108,7 @@ const Hero2: React.FC = () => {
             </div>
 
             {/* Code Lines */}
+            
             <div className="mt-16 space-y-3 px-6">
               <div className="h-4 w-3/4 bg-white/10 rounded"></div>
               <div className="h-4 w-2/3 bg-white/10 rounded"></div>
