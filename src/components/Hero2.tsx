@@ -69,7 +69,7 @@ const Hero2: React.FC = () => {
         <div className="space-y-6 animate-pulse flex flex-col items-center md:items-start">
 
           {/* Availability Badge */}
-          <div className="h-6 w-40 bg-white/10 rounded-full"></div>
+          {/* <div className="h-6 w-40 bg-white/10 rounded-full"></div> */}
 
           {/* Title Lines */}
           <div className="h-10 w-3/4 bg-white/10 rounded"></div>
