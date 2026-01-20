@@ -36,38 +36,37 @@ const Hero: React.FC = () => {
     fetchHero();
   }, []);
 
-  //  SKELETON LOADER
+  //  SKELETON LOADER (mobile-friendly)
   if (isLoading) {
-  return (
-    <section className="min-h-screen flex items-center justify-center px-6 md:px-20">
-      <div className="flex flex-col-reverse md:flex-row items-center justify-center gap-12 w-full">
+    return (
+      <section className="min-h-screen flex items-center px-4 sm:px-6 md:px-20">
+        <div className="flex flex-col-reverse md:flex-row items-center justify-center gap-8 sm:gap-10 w-full max-w-5xl mx-auto">
+          {/* Left Skeleton (text/content) */}
+          <div className="w-full md:w-1/2 space-y-4 sm:space-y-6 animate-pulse text-center md:text-left">
+            {/* Name / Title */}
+            <div className="h-7 sm:h-9 bg-slate-700/40 rounded w-2/3 sm:w-1/2 mx-auto md:mx-0" />
+            <div className="h-4 sm:h-5 bg-slate-700/40 rounded w-3/4 mx-auto md:mx-0" />
+            <div className="h-4 sm:h-5 bg-slate-700/40 rounded w-5/6 mx-auto md:mx-0" />
 
-        {/* Left Skeleton */}
-<div className="space-y-6 w-full max-w-xl animate-pulse text-center">
-        
-          
-          <div className="h-6 bg-slate-700/40 rounded w-1/2 mx-auto md:mx-0"></div>
-          <div className="h-4 bg-slate-700/40 rounded w-full"></div>
-          <div className="h-4 bg-slate-700/40 rounded w-5/6 mx-auto md:mx-0"></div>
+            {/* Social Icons */}
+            <div className="flex justify-center md:justify-start gap-3 sm:gap-4 pt-2 sm:pt-3">
+              <div className="h-9 w-9 sm:h-10 sm:w-10 bg-slate-700/40 rounded-full" />
+              <div className="h-9 w-9 sm:h-10 sm:w-10 bg-slate-700/40 rounded-full" />
+              <div className="h-9 w-9 sm:h-10 sm:w-10 bg-slate-700/40 rounded-full" />
+            </div>
 
-          <div className="flex justify-center gap-4 pt-3">
-            <div className="h-10 w-10 bg-slate-700/40 rounded-full"></div>
-            <div className="h-10 w-10 bg-slate-700/40 rounded-full"></div>
-            <div className="h-10 w-10 bg-slate-700/40 rounded-full"></div>
+            {/* Button */}
+            <div className="h-10 sm:h-11 w-44 sm:w-48 bg-slate-700/40 rounded-full mx-auto md:mx-0 mt-4 sm:mt-6" />
           </div>
 
-          <div className="h-12 w-40 bg-slate-700/40 rounded-full mx-auto md:mx-0 mt-6"></div>
+          {/* Right Skeleton (image) */}
+          <div className="w-full md:w-auto flex items-center justify-center">
+            <div className="w-40 h-40 sm:w-52 sm:h-52 md:w-72 md:h-72 bg-slate-700/40 rounded-2xl animate-pulse" />
+          </div>
         </div>
-
-        {/* Right Skeleton */}
-        <div className="flex items-center justify-center">
-          <div className="w-64 h-64 md:w-80 md:h-80 bg-slate-700/40 rounded-2xl animate-pulse"></div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
+      </section>
+    );
+  }
 
   if (error || !heroData) {
     return (
