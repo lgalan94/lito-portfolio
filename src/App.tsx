@@ -23,7 +23,7 @@ function App() {
   return (
     <div className="bg-slate-900 text-slate-300">
       {/* ✅ Pass both props */}
-     
+     <Sidebar activeSection={activeSection} onNav
 
       <main>
         
