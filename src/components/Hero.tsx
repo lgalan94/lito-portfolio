@@ -37,11 +37,9 @@ const Hero: React.FC = () => {
   }, []);
 
   //  SKELETON LOADER (mobile-friendly)
-  if (!isLoading) {
+  if (isLoading) {
     return (
       <section className="min-h-screen flex items-center px-4 sm:px-6 md:px-20">
-
-<p>sample</p>
 
 
 
