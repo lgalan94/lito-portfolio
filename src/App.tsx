@@ -26,7 +26,7 @@ function App() {
       <Sidebar activeSection={activeSection} onNavLinkClick={handleNavLinkClick} />
 
       <main>
-        <Hero />
+        
         <About />
         <Skills />
         <Projects />
