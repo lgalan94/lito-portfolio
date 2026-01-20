@@ -53,78 +53,19 @@ const Hero2: React.FC = () => {
   };
 
   // -----------------------
-  // ⭐ SKELETON LOADING UI
+  // ⭐ SIMPLE LOADING SPINNER
   // -----------------------
- if (isLoading) {
-  return (
-    <section className="min-h-screen flex items-center px-6 pt-20">
-      <div className="
-        container mx-auto 
-        grid md:grid-cols-2 
-        gap-16 items-center
-        text-center md:text-left
-      ">
-        
-        {/* LEFT SIDE */}
-       {/* <div className="space-y-6 animate-pulse flex flex-col items-center md:items-start">*/}
-
-          {/* Availability Badge */}
-          {/* <div className="h-6 w-40 bg-white/10 rounded-full"></div> */}
-
-          {/* Title Lines */}
-          <div className="h-10 w-3/4 bg-white/10 rounded"></div>
-          <div className="h-10 w-2/3 bg-white/10 rounded"></div>
-
-          {/* Bio */}
-          <div className="h-4 w-full bg-white/10 rounded"></div>
-          <div className="h-4 w-5/6 bg-white/10 rounded"></div>
-
-          {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-10">
-            <div className="h-12 w-40 bg-white/10 rounded-lg"></div>
-            <div className="h-12 w-40 bg-white/10 rounded-lg"></div>
-          </div>
-
-          {/* Socials */}
-          <div className="flex gap-4 pt-4 justify-center md:justify-start">
-            <div className="h-10 w-10 bg-white/10 rounded-full"></div>
-            <div className="h-10 w-10 bg-white/10 rounded-full"></div>
-            <div className="h-10 w-10 bg-white/10 rounded-full"></div>
-            <div className="h-10 w-10 bg-white/10 rounded-full"></div>
-          </div>
-
+  if (isLoading) {
+    return (
+      <section className="min-h-screen flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          {/* Spinner */}
+          <div className="w-12 h-12 border-4 border-gray-300 border-t-cyan-500 rounded-full animate-spin" />
+          <p className="text-gray-400 text-sm">Loading...</p>
         </div>
-
-        {/* RIGHT SIDE */}
-        <div className="sm:flex hidden justify-center w-full rotate-2 hover:rotate-0">
-          <div className="relative w-[600px] h-72 bg-white/10 rounded-2xl animate-pulse">
-
-            {/* Toolbar */}
-            <div className="absolute top-0 left-0 right-0 h-12 border-b border-white/10 
-              flex items-center gap-2 px-4">
-              <div className="w-3 h-3 bg-white/20 rounded-full"></div>
-              <div className="w-3 h-3 bg-white/20 rounded-full"></div>
-              <div className="w-3 h-3 bg-white/20 rounded-full"></div>
-            </div>
-
-            {/* Code Lines */}
-            
-            <div className="mt-16 space-y-3 px-6">
-              <div className="h-4 w-3/4 bg-white/10 rounded"></div>
-              <div className="h-4 w-2/3 bg-white/10 rounded"></div>
-              <div className="h-4 w-1/2 bg-white/10 rounded"></div>
-              <div className="h-4 w-3/4 bg-white/10 rounded"></div>
-              <div className="h-4 w-1/3 bg-white/10 rounded"></div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-  );
-}
-
-
+      </section>
+    );
+  }
 
   // -----------------------
   // ❌ ERROR STATE
@@ -152,15 +93,11 @@ const Hero2: React.FC = () => {
         md:pl-1 lg:pl-22"
     >
 
-   
       {/* BACKGROUND BLOBS */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
         <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-primary/20 rounded-full blur-[100px] mix-blend-screen animate-blob"></div>
-
         <div className="absolute top-[20%] right-[-10%] w-[400px] h-[400px] bg-secondary/20 rounded-full blur-[100px] mix-blend-screen animate-blob animation-delay-2000"></div>
-
         <div className="absolute bottom-[-10%] left-[20%] w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-4000"></div>
-
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
       </div>
 
@@ -181,7 +118,6 @@ const Hero2: React.FC = () => {
               </span>
             </div>
           </div>
-
 
           <h1 className="text-5xl md:text-7xl font-bold font-display text-center md:text-start leading-tight mb-6">
             Hi, I'm <span className="text-cyan-500 animated-gradient">{heroData.fullName.toUpperCase()}</span>.<br />
@@ -211,30 +147,28 @@ const Hero2: React.FC = () => {
               offset={-50}
               className="px-4 lg:px-8 py-2 lg:py-4 border border-white/20 text-white font-bold rounded-lg hover:bg-white/5 transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
-             Hire Me
+              Hire Me
             </Link>
           </div>
 
           {/* DYNAMIC SOCIAL ICONS */}
           <div className="flex justify-center md:justify-start gap-6 text-muted">
-                {socialLinks.map(([key, url]) => url ? (
-                <motion.a
-                    key={key}
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-slate-300 hover:text-cyan-400 transition-transform duration-300"
-                    whileHover={{ scale: 1.3 }}
-                >
-                    {SOCIAL_ICON_MAP[key]}
-                </motion.a>
-                ): null
-            )}
+            {socialLinks.map(([key, url]) => (
+              <motion.a
+                key={key}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-300 hover:text-cyan-400 transition-transform duration-300"
+                whileHover={{ scale: 1.3 }}
+              >
+                {SOCIAL_ICON_MAP[key]}
+              </motion.a>
+            ))}
           </div>
-
         </motion.div>
 
-        {/* RIGHT VISUAL — SAME AS YOUR DESIGN */}
+        {/* RIGHT VISUAL */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -289,30 +223,28 @@ const Hero2: React.FC = () => {
 
             {/* Floating Badges */}
             <motion.div 
-                className="absolute -top-10 -right-10 p-4 glass-card rounded-xl animate-pulse"
-                animate={{ y: [0, 10, 0] }}
-                transition={{ repeat: Infinity, duration: 2 }} 
+              className="absolute -top-10 -right-10 p-4 glass-card rounded-xl animate-pulse"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ repeat: Infinity, duration: 2 }} 
             >
               <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" className="w-10 h-10" />
             </motion.div>
 
             <motion.div 
-                className="absolute -bottom-5 -left-10 p-4 glass-card rounded-xl animate-pulse"
-                animate={{ y: [0, 10, 0] }}
-                transition={{ repeat: Infinity, duration: 2 }} 
+              className="absolute -bottom-5 -left-10 p-4 glass-card rounded-xl animate-pulse"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ repeat: Infinity, duration: 2 }} 
             >
               <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" className="w-10 h-10" />
             </motion.div>
 
             <motion.div 
-                className="absolute bottom-20 -right-12 p-3 glass-card rounded-xl animate-pulse"
-                animate={{ y: [0, 10, 0] }}
-                transition={{ repeat: Infinity, duration: 2 }} 
+              className="absolute bottom-20 -right-12 p-3 glass-card rounded-xl animate-pulse"
+              animate={{ y: [0, 10, 0] }}
+              transition={{ repeat: Infinity, duration: 2 }} 
             >
               <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" className="w-8 h-8" />
             </motion.div>
-
-           
           </div>
         </motion.div>
       </div>
