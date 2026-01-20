@@ -45,7 +45,7 @@ const Hero: React.FC = () => {
         {/* Left Skeleton */}
 <div className="space-y-6 w-full max-w-xl animate-pulse text-center">
         
-          <div className="h-10 bg-slate-700/40 rounded w-3/4 mx-auto md:mx-0"></div>
+          
           <div className="h-6 bg-slate-700/40 rounded w-1/2 mx-auto md:mx-0"></div>
           <div className="h-4 bg-slate-700/40 rounded w-full"></div>
           <div className="h-4 bg-slate-700/40 rounded w-5/6 mx-auto md:mx-0"></div>
