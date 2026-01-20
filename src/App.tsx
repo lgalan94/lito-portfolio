@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import Hero from "./components/Hero";
+import Hero2 from "./components/Hero2";
 import About from "./components/About";
 import Skills from "./components/Skills";
 import Projects from "./components/Projects";
@@ -26,7 +26,7 @@ function App() {
       <Sidebar activeSection={activeSection} onNavLinkClick={handleNavLinkClick} />
 
       <main>
-        <Hero />
+        <Hero2 />
         <About />
         <Skills />
         <Projects />
