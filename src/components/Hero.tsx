@@ -43,7 +43,7 @@ const Hero: React.FC = () => {
       <div className="flex flex-col-reverse md:flex-row items-center justify-center gap-12 w-full">
 
         {/* Left Skeleton */}
-        <div className="space-y-6 w-full max-w-xl animate-pulse text-center md:text-left">
+        
           <div className="h-10 bg-slate-700/40 rounded w-3/4 mx-auto md:mx-0"></div>
           <div className="h-6 bg-slate-700/40 rounded w-1/2 mx-auto md:mx-0"></div>
           <div className="h-4 bg-slate-700/40 rounded w-full"></div>
