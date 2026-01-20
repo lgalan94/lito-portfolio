@@ -37,9 +37,15 @@ const Hero: React.FC = () => {
   }, []);
 
   //  SKELETON LOADER (mobile-friendly)
-  if (isLoading) {
+  if (!isLoading) {
     return (
       <section className="min-h-screen flex items-center px-4 sm:px-6 md:px-20">
+
+<p>sample</p>
+
+
+
+
         <div className="flex flex-col-reverse md:flex-row items-center justify-center gap-8 sm:gap-10 w-full max-w-5xl mx-auto">
           {/* Left Skeleton (text/content) */}
           <div className="w-full md:w-1/2 space-y-4 sm:space-y-6 animate-pulse text-center">
