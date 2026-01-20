@@ -66,7 +66,7 @@ const Hero2: React.FC = () => {
       ">
         
         {/* LEFT SIDE */}
-        <div className="space-y-6 animate-pulse flex flex-col items-center md:items-start">
+       {/* <div className="space-y-6 animate-pulse flex flex-col items-center md:items-start">*/}
 
           {/* Availability Badge */}
           {/* <div className="h-6 w-40 bg-white/10 rounded-full"></div> */}
