@@ -53,18 +53,10 @@ const Hero2: React.FC = () => {
   };
 
   // -----------------------
-  // ⭐ SIMPLE LOADING SPINNER
+  // ⭐ SIMPLE LOADING (P TAG)
   // -----------------------
   if (isLoading) {
-    return (
-      <section className="min-h-screen flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          {/* Spinner */}
-          <div className="w-12 h-12 border-4 border-gray-300 border-t-cyan-500 rounded-full animate-spin" />
-          <p className="text-gray-400 text-sm">Loading...</p>
-        </div>
-      </section>
-    );
+    return <p>Loading...</p>;
   }
 
   // -----------------------
@@ -92,17 +84,18 @@ const Hero2: React.FC = () => {
         relative min-h-screen flex items-center pt-20 overflow-hidden
         md:pl-1 lg:pl-22"
     >
-
       {/* BACKGROUND BLOBS */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
         <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-primary/20 rounded-full blur-[100px] mix-blend-screen animate-blob"></div>
+
         <div className="absolute top-[20%] right-[-10%] w-[400px] h-[400px] bg-secondary/20 rounded-full blur-[100px] mix-blend-screen animate-blob animation-delay-2000"></div>
+
         <div className="absolute bottom-[-10%] left-[20%] w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px] mix-blend-screen animate-blob animation-delay-4000"></div>
+
         <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
       </div>
 
       <div className="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
-
         {/* LEFT CONTENT — NOW DYNAMIC */}
         <motion.div
           variants={fadeVariants}
@@ -153,22 +146,24 @@ const Hero2: React.FC = () => {
 
           {/* DYNAMIC SOCIAL ICONS */}
           <div className="flex justify-center md:justify-start gap-6 text-muted">
-            {socialLinks.map(([key, url]) => (
-              <motion.a
-                key={key}
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-slate-300 hover:text-cyan-400 transition-transform duration-300"
-                whileHover={{ scale: 1.3 }}
-              >
-                {SOCIAL_ICON_MAP[key]}
-              </motion.a>
-            ))}
+            {socialLinks.map(([key, url]) =>
+              url ? (
+                <motion.a
+                  key={key}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-slate-300 hover:text-cyan-400 transition-transform duration-300"
+                  whileHover={{ scale: 1.3 }}
+                >
+                  {SOCIAL_ICON_MAP[key]}
+                </motion.a>
+              ) : null
+            )}
           </div>
         </motion.div>
 
-        {/* RIGHT VISUAL */}
+        {/* RIGHT VISUAL — SAME AS YOUR DESIGN */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -176,7 +171,6 @@ const Hero2: React.FC = () => {
           className="relative hidden lg:block"
         >
           <div className="relative z-10 glass-card rounded-2xl p-6 transform rotate-2 hover:rotate-0 transition-all duration-500">
-            
             {/* Top bar */}
             <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-4">
               <div className="w-3 h-3 rounded-full bg-red-500"></div>
@@ -222,28 +216,37 @@ const Hero2: React.FC = () => {
             </div>
 
             {/* Floating Badges */}
-            <motion.div 
+            <motion.div
               className="absolute -top-10 -right-10 p-4 glass-card rounded-xl animate-pulse"
               animate={{ y: [0, 10, 0] }}
-              transition={{ repeat: Infinity, duration: 2 }} 
+              transition={{ repeat: Infinity, duration: 2 }}
             >
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" className="w-10 h-10" />
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                className="w-10 h-10"
+              />
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="absolute -bottom-5 -left-10 p-4 glass-card rounded-xl animate-pulse"
               animate={{ y: [0, 10, 0] }}
-              transition={{ repeat: Infinity, duration: 2 }} 
+              transition={{ repeat: Infinity, duration: 2 }}
             >
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" className="w-10 h-10" />
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                className="w-10 h-10"
+              />
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="absolute bottom-20 -right-12 p-3 glass-card rounded-xl animate-pulse"
               animate={{ y: [0, 10, 0] }}
-              transition={{ repeat: Infinity, duration: 2 }} 
+              transition={{ repeat: Infinity, duration: 2 }}
             >
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" className="w-8 h-8" />
+              <img
+                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+                className="w-8 h-8"
+              />
             </motion.div>
           </div>
         </motion.div>
