@@ -50,7 +50,7 @@ const Hero: React.FC = () => {
           <div className="h-4 bg-slate-700/40 rounded w-full"></div>
           <div className="h-4 bg-slate-700/40 rounded w-5/6 mx-auto md:mx-0"></div>
 
-          <div className="flex justify-center md:justify-start gap-4 pt-3">
+          <div className="flex justify-center gap-4 pt-3">
             <div className="h-10 w-10 bg-slate-700/40 rounded-full"></div>
             <div className="h-10 w-10 bg-slate-700/40 rounded-full"></div>
             <div className="h-10 w-10 bg-slate-700/40 rounded-full"></div>
