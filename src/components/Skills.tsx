@@ -120,7 +120,7 @@ const Skills: React.FC = () => {
 
         {/* GRID VIEW */}
         {viewMode === "grid" && (
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 px-10">
             {allSkills.map((skill, index) => (
               <motion.div
                 key={skill.name + index}
