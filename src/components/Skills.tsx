@@ -120,7 +120,7 @@ const Skills: React.FC = () => {
 
         {/* GRID VIEW */}
         {viewMode === "grid" && (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 !px-20">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:!px-20">
             {allSkills.map((skill, index) => (
               <motion.div
                 key={skill.name + index}
@@ -151,7 +151,7 @@ const Skills: React.FC = () => {
 
         {/* KANBAN VIEW */}
         {viewMode === "kanban" && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:!px-20 mt-6">
             {Object.keys(skillsData).map((category) => (
               <div
                 key={category}
