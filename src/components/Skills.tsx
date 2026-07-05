@@ -45,7 +45,7 @@ const Skills: React.FC = () => {
   /** FULL PAGE SKELETON */
   if (loading) {
     return (
-      <section id="skills" className="relative py-6 lg:py-24 overflow-hidden ">
+      <section id="skills" className="relative overflow-hidden px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28 xl:py-32">
         <div className="relative max-w-7xl mx-auto px-2 text-center">
           
           <Skeleton className="h-10 w-64 mx-auto mb-6 rounded-full" />
