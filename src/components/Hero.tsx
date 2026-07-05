@@ -114,7 +114,7 @@ const Hero: React.FC = () => {
         animate="visible"
       >
         <h1 className="uppercase text-5xl lg:text-[80px] font-extrabold bg-gradient-to-r from-black-50 via-blue-500 to-cyan-600 bg-clip-text text-transparent font-['Poppins'] tracking-tight animated-gradient">
-          {heroData.fullName.replace(/\s+/g, "")}
+          {heroData.fullName.replace(/\s+/g, "")} SAMPLE
         </h1>
 
         <p className="text-xl lg:text-2xl md:text-3xl font-semibold text-slate-200">
