@@ -4,7 +4,7 @@ export interface NavLink {
   id: string;
   name: string;
   title?: string;
-  icon?: ReactNode; // 👈 Add this line
+  icon?: ReactNode; 
 }
 
 
@@ -62,6 +62,38 @@ export interface Project {
   liveUrl?: string;
   repoUrl?: string;
   category: string;
+}
+
+export interface Certificate {
+  _id: string;
+  title: string;
+  issuer: string;
+  issueDate: string;
+  description: string;
+  imageUrl: string;
+  imagePublicId?: string | null;
+  credentialUrl?: string | null;
+  owner: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateCertificatePayload {
+  title: string;
+  issuer: string;
+  issueDate: string;
+  description: string;
+  credentialUrl?: string;
+  image: File;
+}
+
+export interface UpdateCertificatePayload {
+  title?: string;
+  issuer?: string;
+  issueDate?: string;
+  description?: string;
+  credentialUrl?: string;
+  image?: File;
 }
 
 

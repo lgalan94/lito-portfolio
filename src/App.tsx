@@ -11,6 +11,7 @@ import { Toaster } from "sonner";
 import Sidebar from "./components/Sidebar";
 import NewsletterCTA from "./components/NewsletterCTA";
 import Chatbot from "./components/Chatbot";
+import Certificates from "./components/Certificates";
 /* import CaseStudySection from "./components/CaseStudy"; */
 
 function App() {
@@ -30,7 +31,7 @@ function App() {
         <About />
         <Skills />
         <Projects />
-        
+        <Certificates />
         {/* <Experience /> */}
         <NewsletterCTA />
         <Contact />
