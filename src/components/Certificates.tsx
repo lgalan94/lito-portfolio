@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from './ui/Card';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { getAllCertificates } from '../services/certificateApi';
 import type { Certificate } from '../types';
-import { ExternalLink, Github } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 
 const Certificates: React.FC = () => {
   
